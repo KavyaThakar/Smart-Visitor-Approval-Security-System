@@ -1,0 +1,40 @@
+{
+  "name": "smart-visitor-approval-security-system",
+  "version": "1.0.0",
+  "description": "A web-based Security Management System for residential buildings to manage visitor entries digitally. Security guards can register visitors and send approval requests to residents. Residents can approve or decline visitors, and the system maintains entry and exit records.",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System/issues"
+  },
+  "homepage": "https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System#readme",
+  "dependencies": {
+    "axios": "^1.13.6",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.20.0",
+    "pg": "^8.20.0",
+    "pg-hstore": "^2.3.4",
+    "react-router-dom": "^7.13.1",
+    "sequelize": "^6.37.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
