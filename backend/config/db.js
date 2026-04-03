@@ -1,4 +1,4 @@
-//supabase connection
+//supabase connection for postgres
 const { Pool } = require("pg");
 require("dotenv").config();
 
