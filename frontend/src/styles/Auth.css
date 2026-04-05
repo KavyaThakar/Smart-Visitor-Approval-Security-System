@@ -162,6 +162,12 @@
   display: none;
 }
 
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -183,5 +189,12 @@ form {
   
   .auth-right {
     padding: 3rem 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }
