@@ -360,3 +360,273 @@
   .portal-row { grid-template-columns: 1fr; }
   .portal-user-info { flex-direction: column; gap: 0.75rem; }
 }
+
+/* Modern Dashboard Layout */
+.dash-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-subtle, #f8fafc);
+  width: 100%;
+}
+
+.dash-sidebar {
+  width: 250px;
+  background: #0f172a;
+  border-right: none;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #1e293b;
+  margin-bottom: 1rem;
+}
+
+.dash-logo-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6366f1;
+}
+
+.dash-logo-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.dash-logo-text strong {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}
+.dash-logo-text span {
+  display: none;
+}
+
+.dash-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dash-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.dash-nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.dash-nav-item.active {
+  background: #6366f1;
+  color: white;
+}
+
+.dash-sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid #1e293b;
+  padding-top: 1.5rem;
+}
+
+.dash-sidebar-footer .dash-nav-item {
+  color: #94a3b8;
+}
+
+.dash-main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-topbar {
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1.5rem 2.5rem;
+}
+
+.dash-topbar h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.dash-main {
+  flex: 1;
+  padding: 2.5rem;
+  overflow-y: auto;
+}
+
+.dash-header {
+  margin-bottom: 2rem;
+}
+.dash-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+.dash-header p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.dash-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dash-stat-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.dash-stat-info label {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.dash-stat-info strong {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.dash-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash-stat-icon.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+.dash-stat-icon.approved {
+  background: #d1fae5;
+  color: #059669;
+}
+.dash-stat-icon.rejected {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.dash-form-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.dash-form-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+}
+
+.dash-form-header svg {
+  color: #4f46e5;
+}
+
+.dash-form-header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Dashboard Split View & Additional Layouts */
+.dash-split-view {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+}
+
+.dash-table-wrapper {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dash-table th {
+  background: #f8fafc;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dash-table td {
+  padding: 1.25rem;
+  font-size: 0.9rem;
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.dash-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Settings Form specifics */
+.settings-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #0f172a;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.settings-section-desc {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
