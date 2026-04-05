@@ -630,3 +630,146 @@
   font-size: 0.95rem;
   margin-bottom: 1.5rem;
 }
+
+/* Admin Specific Overrides */
+.admin-stat-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-stat-card label {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.admin-stat-card strong {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.admin-stat-blue { border-top: 4px solid #6366f1; }
+.admin-stat-blue strong { color: #0f172a; }
+
+.admin-stat-green { border-top: 4px solid #10b981; }
+.admin-stat-green strong { color: #10b981; }
+
+.admin-stat-orange { border-top: 4px solid #f59e0b; }
+.admin-stat-orange strong { color: #f59e0b; }
+
+.admin-stat-red { border-top: 4px solid #ef4444; }
+.admin-stat-red strong { color: #ef4444; }
+
+
+.admin-toggle {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.admin-toggle-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  color: #64748b;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-toggle-btn.active {
+  background: white;
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.mock-chart-container {
+  height: 250px;
+  border-left: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.mock-chart-grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed #e2e8f0;
+}
+.mock-chart-y-axis {
+  position: absolute;
+  left: -20px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+/* Resident Stat Cards with left colored border */
+.resident-stat-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.resident-stat-card label {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.resident-stat-card strong {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1;
+}
+.resident-stat-blue { border-left: 4px solid #6366f1; }
+.resident-stat-orange { border-left: 4px solid #f59e0b; }
+.resident-stat-orange strong { color: #f59e0b; }
+.resident-stat-flat { border-left: 4px solid #64748b; }
+
+/* Approve/Reject pill buttons */
+.btn-pill-approve,
+.btn-pill-reject {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1.5px solid;
+  background: white;
+}
+
+.btn-pill-approve {
+  color: #059669;
+  border-color: #a7f3d0;
+}
+.btn-pill-approve:hover {
+  background: #ecfdf5;
+}
+
+.btn-pill-reject {
+  color: #dc2626;
+  border-color: #fecaca;
+}
+.btn-pill-reject:hover {
+  background: #fef2f2;
+}
