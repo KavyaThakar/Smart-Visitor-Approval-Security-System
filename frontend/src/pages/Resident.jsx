@@ -99,14 +99,12 @@ export default function Resident() {
             {user?.flat_no ? `Flat ${user.flat_no}` : "Flat Not Set"} &mdash; {user?.email}
           </p>
         </div>
-        <button className="btn-logout" onClick={logout} style={{ padding: "0.75rem 1.5rem", borderRadius: "99px", fontWeight: "700", boxShadow: "var(--shadow-sm)" }}>Sign Out</button>
       </header>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", alignItems: "start" }}>
         
-        {/* LEFT COLUMN: URGENT ACTIONS & ENTRY ASS */}
+        {/* LEFT COLUMN: URGENT ACTIONS */}
         <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-          
           <div className="page-box" style={{ background: pendingVisits.length > 0 ? "var(--warning-bg)" : "var(--bg-surface)", border: pendingVisits.length > 0 ? "2px solid var(--warning)" : "1px solid var(--border-color)", padding: "2rem" }}>
             <h2 style={{ fontSize: "1.25rem", color: pendingVisits.length > 0 ? "#b45309" : "var(--text-main)", display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
               {pendingVisits.length > 0 ? "🔴 Action Required!" : "✔️ No Pending Approvals"}
@@ -117,7 +115,7 @@ export default function Resident() {
                   <p style={{ color: "var(--text-muted)", fontSize: "1.05rem" }}>You are all caught up. No visitors are currently waiting at the gate.</p>
                 ) : (
                   pendingVisits.map(v => (
-                    <div key={v.visit_id} style={{ background: "white", padding: "1.5rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-md)", border: "1px solid var(--warning-border)" }}>
+                    <div key={v.visit_id} style={{ background: "white", padding: "1.5rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-md)", border: "1px solid var(--warning-border)", marginBottom: "1rem" }}>
                       <div style={{ marginBottom: "1.5rem" }}>
                         <strong style={{ fontSize: "1.5rem", display: "block", color: "var(--text-main)", marginBottom: "4px" }}>{v.visitor_name}</strong>
                         <span style={{ fontSize: "1.05rem", color: "var(--text-muted)" }}>Purpose: {v.purpose}</span>
@@ -136,79 +134,35 @@ export default function Resident() {
               }
             </div>
           </div>
-
-          <div className="page-box">
-             <h2 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>Generate Entry Pass</h2>
-             <p style={{ color: "var(--text-muted)", fontSize: "0.95rem", marginBottom: "1.5rem" }}>Pre-approve a guest to skip the queue.</p>
-             <form onSubmit={e => { e.preventDefault(); submitPreApprove(); }}>
-                <div className="form-group" style={{ marginBottom: "1.25rem" }}>
-                  <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em" }}>Guest Full Name</label>
-                  <input type="text" placeholder="e.g. Michael Scott" value={preForm.name} onChange={e => setForm({ ...preForm, name: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "0.85rem", fontSize: "1rem" }} />
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.25rem" }}>
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em" }}>Date</label>
-                    <input type="date" value={preForm.date} onChange={e => setForm({ ...preForm, date: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "0.85rem", fontSize: "1rem" }} />
-                  </div>
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em" }}>Time</label>
-                    <input type="time" value={preForm.time} onChange={e => setForm({ ...preForm, time: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "0.85rem", fontSize: "1rem" }} />
-                  </div>
-                </div>
-                <div className="form-group" style={{ marginBottom: "1.25rem" }}>
-                  <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em" }}>Purpose of Visit (Optional)</label>
-                  <input type="text" placeholder="e.g. Plumber, Birthday Party" value={preForm.purpose} onChange={e => setForm({ ...preForm, purpose: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "0.85rem", fontSize: "1rem" }} />
-                </div>
-                <button type="submit" className="btn-signin" disabled={loading} style={{ background: "var(--primary)", padding: "1.1rem", fontSize: "1.05rem", borderRadius: "8px" }}>
-                  {loading ? 'Processing...' : 'Create Pre-Approved Pass'}
-                </button>
-             </form>
-          </div>
-
         </div>
 
-        {/* RIGHT COLUMN: HISTORY */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-          
-          <div className="page-box" style={{ padding: "2rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
-              <h2 style={{ margin: 0, fontSize: "1.25rem" }}>Recent Activity</h2>
-              <select value={historyFilter} onChange={e => setHistoryFilter(e.target.value)} style={{ width: "auto", padding: "0.5rem 1rem", background: "var(--bg-main)", border: "1px solid var(--border-color)", borderRadius: "var(--radius-sm)", fontWeight: "600", fontSize: "0.85rem" }}>
-                <option value="all">All Records</option>
-                <option value="approved">Approved</option>
-                <option value="rejected">Rejected</option>
-              </select>
-            </div>
-            
-            <div className="visits-list">
-              {expectedVisits.map(v => (
-                <div key={v.visit_id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1rem 0", borderBottom: "1px solid var(--border-color)" }}>
-                  <div>
-                    <strong style={{ fontSize: "1.05rem", display: "block", color: "var(--text-main)" }}>{v.visitor_name}</strong>
-                    <span style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>Expected: {new Date(v.check_in_time).toLocaleString([], {weekday: 'short', hour:'2-digit', minute:'2-digit'})}</span>
-                  </div>
-                  <span style={{ fontSize: "0.75rem", background: "var(--primary-light)", color: "var(--primary)", padding: "0.35rem 0.75rem", borderRadius: "99px", fontWeight: "800" }}>EXPECTED</span>
+        {/* RIGHT COLUMN: ENTRY PASS FORM */}
+        <div className="page-box" style={{ padding: "2.5rem 2rem", boxShadow: "var(--shadow-md)" }}>
+           <h2 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>Pre-Approve Guest</h2>
+           <p style={{ color: "var(--text-muted)", fontSize: "0.95rem", marginBottom: "2rem" }}>Generate an expected entry pass for quick clearance.</p>
+           <form onSubmit={e => { e.preventDefault(); submitPreApprove(); }} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              <div className="form-group" style={{ margin: 0 }}>
+                <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Guest Full Name</label>
+                <input type="text" placeholder="e.g. Michael Scott" value={preForm.name} onChange={e => setForm({ ...preForm, name: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }}>
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Date</label>
+                  <input type="date" value={preForm.date} onChange={e => setForm({ ...preForm, date: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
                 </div>
-              ))}
-              
-              {filteredHistory.length === 0 && expectedVisits.length === 0 ? (
-                <p style={{ textAlign: "center", color: "var(--text-muted)", padding: "2rem 0" }}>No visit history found.</p>
-              ) : (
-                filteredHistory.map(v => (
-                  <div key={v.visit_id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1rem 0", borderBottom: "1px solid var(--border-color)" }}>
-                    <div>
-                      <strong style={{ fontSize: "1.05rem", display: "block", color: "var(--text-main)" }}>{v.visitor_name}</strong>
-                      <span style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>{new Date(v.check_in_time).toLocaleString([], {weekday: 'short', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit'})}</span>
-                    </div>
-                    <span style={{ fontSize: "0.75rem", background: v.status === 'approved' ? "var(--success-bg)" : "var(--danger-bg)", color: v.status === 'approved' ? "var(--success)" : "var(--danger)", padding: "0.35rem 0.75rem", borderRadius: "99px", fontWeight: "800" }}>
-                      {v.status.toUpperCase()}
-                    </span>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-          
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Time</label>
+                  <input type="time" value={preForm.time} onChange={e => setForm({ ...preForm, time: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
+                </div>
+              </div>
+              <div className="form-group" style={{ margin: 0 }}>
+                <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Purpose of Visit (Optional)</label>
+                <input type="text" placeholder="e.g. Plumber, Birthday Party" value={preForm.purpose} onChange={e => setForm({ ...preForm, purpose: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
+              </div>
+              <button type="submit" className="btn-signin" disabled={loading} style={{ background: "var(--primary)", padding: "1.25rem", fontSize: "1.1rem", borderRadius: "12px", marginTop: "1rem" }}>
+                {loading ? 'Processing...' : 'Create Pre-Approved Pass ➔'}
+              </button>
+           </form>
         </div>
 
       </div>
