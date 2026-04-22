@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function SidebarLayout({ children, role }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const user = JSON.parse(window.localStorage.getItem("currentUser") || "null");
 
@@ -34,10 +36,19 @@ export default function SidebarLayout({ children, role }) {
     return [];
   };
 
+  const closeMenu = () => setIsMobileMenuOpen(false);
+
   return (
     <div style={{ display: "flex", height: "100vh", backgroundColor: "var(--bg-main)", overflow: "hidden" }}>
+      
+      {/* Mobile Overlay */}
+      <div 
+        className={`sidebar-overlay ${isMobileMenuOpen ? "open" : ""}`} 
+        onClick={closeMenu}
+      />
+
       {/* Sidebar */}
-      <aside style={{ width: "260px", background: "var(--button-dark)", color: "white", display: "flex", flexDirection: "column", flexShrink: 0, boxShadow: "var(--shadow-md)", zIndex: 10 }}>
+      <aside className={`app-sidebar ${isMobileMenuOpen ? "open" : ""}`}>
         <div style={{ padding: "2rem", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
           <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "800", letterSpacing: "-0.05em", color: "white", display: "flex", alignItems: "center", gap: "10px" }}>
              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -60,7 +71,7 @@ export default function SidebarLayout({ children, role }) {
             };
 
             return (
-              <Link key={link.path} to={link.path} style={linkStyle}>
+              <Link key={link.path} to={link.path} style={linkStyle} onClick={closeMenu}>
                 {link.name}
               </Link>
             )
@@ -85,6 +96,10 @@ export default function SidebarLayout({ children, role }) {
 
       {/* Main Content Wrapper */}
       <main style={{ flexGrow: 1, height: "100vh", overflowY: "auto", position: "relative" }}>
+        {/* Mobile Hamburger Button */}
+        <button className="mobile-toggle-btn" onClick={() => setIsMobileMenuOpen(true)}>
+           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
         {children}
       </main>
     </div>

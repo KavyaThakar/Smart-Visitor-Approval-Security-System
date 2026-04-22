@@ -356,9 +356,70 @@
 .status-row-approved td:first-child { border-left: 4px solid var(--success); }
 .status-row-rejected td:first-child { border-left: 4px solid var(--danger); }
 
+/* Sidebar Logic */
+.app-sidebar {
+  width: 260px;
+  background: var(--button-dark);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.mobile-toggle-btn {
+  display: none;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  z-index: 50;
+  color: var(--text-main);
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 90;
+  animation: fadeIn 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+  
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .mobile-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-overlay.open {
+    display: block;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .portal-container { padding: 1rem; }
+  .portal-container { padding: 1rem; padding-top: 5rem; } /* Padded to avoid toggle btn */
   .portal-header {
     flex-direction: column;
     gap: 1rem;
@@ -366,4 +427,9 @@
   }
   .portal-row { grid-template-columns: 1fr; }
   .portal-user-info { flex-direction: column; gap: 0.75rem; }
+  
+  /* Reset grids to 1 column on mobile */
+  div[style*="display: grid"] {
+     grid-template-columns: 1fr !important;
+  }
 }
