@@ -59,254 +59,140 @@ export default function Resident() {
     window.location = "/login";
   };
 
-  /* ─── Dashboard Tab ─── */
-  const renderDashboard = () => (
-    <>
-      {/* Stats Row */}
-      <div className="dash-stats-row" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-        <div className="resident-stat-card resident-stat-blue">
-          <label>Total Visits</label>
-          <strong>{stats.total}</strong>
+  return (
+    <div className="portal-container">
+      <header className="portal-header">
+        <div className="portal-title">
+          <h1>🏠 Resident Portal</h1>
         </div>
-        <div className="resident-stat-card resident-stat-orange">
-          <label>Action Required</label>
-          <strong>{stats.pending}</strong>
+        <div className="portal-user-info">
+          <span>{user?.flat_no ? `Flat ${user.flat_no}` : "Flat Not Set"} • {user?.email}</span>
+          <button className="btn-logout" onClick={logout}>Logout</button>
         </div>
-        <div className="resident-stat-card resident-stat-flat">
-          <label>Flat Number</label>
-          <strong style={{ fontSize: "1.75rem" }}>{stats.flat}</strong>
-        </div>
-      </div>
+      </header>
 
-      {/* Pending Approvals */}
-      <div className="dash-form-card" style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.25rem" }}>Pending Approvals</h2>
-        <p style={{ color: "#64748b", fontSize: "0.85rem", margin: "0 0 1.5rem 0" }}>Visitors at the gate awaiting your approval</p>
+      <div className="portal-content">
+        <div className="stats-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          <div className="stats-card">
+            <div className="stat-number" style={{ color: "#3b82f6" }}>{stats.total}</div>
+            <div className="stat-label">Total Visits</div>
+          </div>
+          <div className="stats-card">
+            <div className="stat-number" style={{ color: "#fbbf24" }}>{stats.pending}</div>
+            <div className="stat-label">Action Required</div>
+          </div>
+          <div className="stats-card">
+            <div className="stat-number" style={{ color: "#8b5cf6" }}>{stats.expected}</div>
+            <div className="stat-label">Expected Guests</div>
+          </div>
+        </div>
 
-        <div style={{ overflowX: "auto" }}>
-          <table className="dash-table">
-            <thead>
-              <tr>
-                <th>Visitor</th>
-                <th>Phone</th>
-                <th>Purpose</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pendingVisits.length === 0 ? (
-                <tr><td colSpan="6" style={{ textAlign: "center", color: "#94a3b8", padding: "2rem" }}>No pending approvals right now</td></tr>
-              ) : (
-                pendingVisits.map(v => (
-                  <tr key={v.visit_id}>
-                    <td style={{ fontWeight: 500 }}>{v.visitor_name}</td>
-                    <td>{v.phone_no || '—'}</td>
-                    <td>{v.purpose}</td>
-                    <td>{new Date(v.check_in_time).toISOString().split('T')[0]}</td>
-                    <td>{new Date(v.check_in_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-                    <td>
-                      <div style={{ display: "flex", gap: "0.5rem" }}>
-                        <button className="btn-pill-approve" onClick={() => approve(v.visit_id)}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                          Approve
-                        </button>
-                        <button className="btn-pill-reject" onClick={() => reject(v.visit_id)}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                          Reject
-                        </button>
+        <div className="portal-row">
+          <div className="portal-col-6">
+            <div className="page-box" style={{ borderLeft: "4px solid #f59e0b" }}>
+              <h2>⚠️ Action Required (Pending)</h2>
+              <div className="visits-list">
+                {loading ? <p style={{ textAlign: "center", color: "#9ca3af" }}>Loading network data...</p> :
+                  (pendingVisits.length === 0 ? (
+                    <p style={{ textAlign: "center", color: "#9ca3af", padding: "1rem" }}>No pending approvals right now.</p>
+                  ) : (
+                    pendingVisits.map(v => (
+                      <div key={v.visit_id} className="visit-card" style={{ background: "rgba(251, 191, 36, 0.05)" }}>
+                        <div className="visit-header">
+                          <div>
+                            <strong>{v.visitor_name}</strong>
+                            <p style={{ fontSize: "0.9rem", color: "var(--text-muted)", margin: "4px 0 0 0" }}>{v.purpose}</p>
+                          </div>
+                          <span className={`status-badge status-${v.status}`}>{v.status.toUpperCase()}</span>
+                        </div>
+                        <div className="action-buttons">
+                          <button onClick={() => approve(v.visit_id)} className="btn-approve">✓ Approve</button>
+                          <button onClick={() => reject(v.visit_id)} className="btn-reject">✕ Reject</button>
+                        </div>
                       </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                    ))
+                  ))
+                }
+              </div>
+            </div>
 
-      {/* Visit History (compact) */}
-      <div className="dash-table-wrapper" style={{ padding: "1.5rem" }}>
-        <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.25rem" }}>Visit History</h2>
-        <p style={{ color: "#64748b", fontSize: "0.85rem", margin: "0 0 1.5rem 0" }}>Recent visitors to your flat</p>
-
-        <div style={{ overflowX: "auto" }}>
-          <table className="dash-table">
-            <thead>
-              <tr>
-                <th>Visitor</th>
-                <th>Phone</th>
-                <th>Type</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {myVisits.filter(v => v.status !== "pending").length === 0 ? (
-                <tr><td colSpan="6" style={{ textAlign: "center", color: "#94a3b8", padding: "2rem" }}>No visit history yet</td></tr>
-              ) : (
-                myVisits.filter(v => v.status !== "pending").slice(0, 5).map(v => (
-                  <tr key={v.visit_id}>
-                    <td style={{ fontWeight: 500 }}>{v.visitor_name}</td>
-                    <td>{v.phone_no || '—'}</td>
-                    <td>{v.purpose}</td>
-                    <td>{new Date(v.check_in_time).toISOString().split('T')[0]}</td>
-                    <td>{new Date(v.check_in_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-                    <td>
-                      <span className={`status-badge status-${v.status}`} style={{ margin: 0 }}>
-                        {v.status.charAt(0).toUpperCase() + v.status.slice(1)}
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </>
-  );
-
-  /* ─── History Tab ─── */
-  const renderHistory = () => (
-    <>
-      <div style={{ marginBottom: "1.5rem" }}>
-        <h2 style={{ fontSize: "1.5rem", color: "#0f172a", margin: "0 0 0.5rem 0" }}>Visit History</h2>
-        <p style={{ color: "#64748b", margin: 0 }}>All visitor records for your flat</p>
-      </div>
-
-      <div className="dash-table-wrapper" style={{ padding: "1.5rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-          <h3 style={{ margin: 0, fontSize: "1.1rem" }}>All Visits</h3>
-          <input type="text" placeholder="🔍 Search visitor..." style={{ padding: "0.5rem 1rem", border: "1px solid #e2e8f0", borderRadius: "8px", minWidth: "220px" }} />
-        </div>
-
-        <div style={{ overflowX: "auto" }}>
-          <table className="dash-table">
-            <thead>
-              <tr>
-                <th>Visitor</th>
-                <th>Phone</th>
-                <th>Type</th>
-                <th>Vehicle</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {myVisits.length === 0 ? (
-                <tr><td colSpan="7" style={{ textAlign: "center", color: "#94a3b8", padding: "2rem" }}>No records found</td></tr>
-              ) : (
-                myVisits.map(v => (
-                  <tr key={v.visit_id}>
-                    <td style={{ fontWeight: 500 }}>{v.visitor_name}</td>
-                    <td>{v.phone_no || '—'}</td>
-                    <td>{v.purpose}</td>
-                    <td>{v.vehicle_no || '—'}</td>
-                    <td>{new Date(v.check_in_time).toISOString().split('T')[0]}</td>
-                    <td>{new Date(v.check_in_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-                    <td>
-                      <span className={`status-badge status-${v.status}`} style={{ margin: 0 }}>
-                        {v.status.charAt(0).toUpperCase() + v.status.slice(1)}
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </>
-  );
-
-  /* ─── Settings Tab ─── */
-  const renderSettings = () => (
-    <div style={{ maxWidth: "800px" }}>
-      {/* Profile Information */}
-      <div className="dash-form-card" style={{ marginBottom: "2rem" }}>
-        <div className="settings-section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          Profile Information
-        </div>
-        <div className="settings-section-desc">Your account details</div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
-          <div className="form-group">
-            <label>Full Name</label>
-            <input type="text" readOnly value={user?.name || "abc"} />
+            <div className="page-box" style={{ marginTop: "1.5rem" }}>
+              <h2>Pre-Approve a Visitor</h2>
+              <p style={{ color: "var(--text-muted)", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
+                Expecting someone? Pre-approve them so they don't have to wait at the gate.
+              </p>
+              <form onSubmit={e => { e.preventDefault(); submitPreApprove(); }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 1rem" }}>
+                  <div className="form-group" style={{ gridColumn: "span 2" }}>
+                    <label>Guest Name *</label>
+                    <input type="text" placeholder="Full Name" value={preForm.name} onChange={e => setPreForm({ ...preForm, name: e.target.value })} />
+                  </div>
+                  <div className="form-group">
+                    <label>Expected Date *</label>
+                    <input type="date" value={preForm.date} onChange={e => setPreForm({ ...preForm, date: e.target.value })} />
+                  </div>
+                  <div className="form-group">
+                    <label>Expected Time *</label>
+                    <input type="time" value={preForm.time} onChange={e => setPreForm({ ...preForm, time: e.target.value })} />
+                  </div>
+                  <div className="form-group" style={{ gridColumn: "span 2" }}>
+                    <label>Purpose / Note</label>
+                    <input type="text" placeholder="e.g. Birthday Party, Fixing AC" value={preForm.purpose} onChange={e => setPreForm({ ...preForm, purpose: e.target.value })} />
+                  </div>
+                </div>
+                <button type="submit" className="btn-signin" disabled={loading} style={{ background: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)", marginTop: "0.5rem" }}>
+                  {loading ? 'Connecting...' : 'Generate Entry Pass'}
+                </button>
+              </form>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Email Address</label>
-            <input type="email" readOnly value={user?.email || "abc@gmail.com"} />
-          </div>
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input type="text" readOnly value="1234567898" />
-          </div>
-          <div className="form-group">
-            <label>Role</label>
-            <input type="text" readOnly value="Resident" />
-          </div>
-          <div className="form-group" style={{ gridColumn: "span 2" }}>
-            <label>Flat Number</label>
-            <input type="text" readOnly value={user?.flat_no || "A-101"} />
-          </div>
-        </div>
-      </div>
 
-      {/* Account Security */}
-      <div className="dash-form-card" style={{ marginBottom: "2rem" }}>
-        <div className="settings-section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          Account Security
-        </div>
-        <div className="settings-section-desc">Manage your password and security settings</div>
+          <div className="portal-col-6">
+            <div className="page-box">
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+                <h2 style={{ margin: 0 }}>Visit History</h2>
+                <select value={historyFilter} onChange={e => setHistoryFilter(e.target.value)} style={{ width: "auto", padding: "0.5rem", marginBottom: 0 }}>
+                  <option value="all">All Past Visits</option>
+                  <option value="approved">Approved</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
 
-        <div className="form-group">
-          <label>Current Password</label>
-          <input type="password" placeholder="Enter current password" />
-        </div>
+              <div className="visits-list">
+                {expectedVisits.map(v => (
+                  <div key={v.visit_id} className="visit-card" style={{ borderLeft: "3px solid #8b5cf6", background: "rgba(139, 92, 246, 0.05)" }}>
+                    <div className="visit-header">
+                      <div>
+                        <strong>{v.visitor_name}</strong>
+                        <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", margin: "4px 0 0 0" }}>{v.purpose}</p>
+                      </div>
+                      <span className="status-badge" style={{ background: "#ede9fe", color: "#8b5cf6", border: "1px solid #ddd6fe" }}>EXPECTED</span>
+                    </div>
+                    <p style={{ margin: "10px 0 0", fontSize: "0.85rem", color: "var(--text-main)", fontWeight: "600" }}>⏱ Expected at: {new Date(v.check_in_time).toLocaleString()}</p>
+                  </div>
+                ))}
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
-          <div className="form-group" style={{ marginBottom: 0 }}>
-            <label>New Password</label>
-            <input type="password" placeholder="New password" />
-          </div>
-          <div className="form-group" style={{ marginBottom: 0 }}>
-            <label>Confirm Password</label>
-            <input type="password" placeholder="Confirm new password" />
+                {filteredHistory.length === 0 ? (
+                  <p style={{ textAlign: "center", color: "#9ca3af", padding: "2rem" }}>No past visits to display</p>
+                ) : (
+                  filteredHistory.map(v => (
+                    <div key={v.visit_id} className="visit-card">
+                      <div className="visit-header">
+                        <div>
+                          <strong>{v.visitor_name}</strong>
+                          <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", margin: "4px 0 0 0" }}>{v.purpose}</p>
+                        </div>
+                        <span className={`status-badge status-${v.status}`}>{v.status.toUpperCase()}</span>
+                      </div>
+                      <p style={{ margin: "10px 0 0", fontSize: "0.85rem", color: "var(--text-muted)" }}>{new Date(v.check_in_time).toLocaleString()}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
-        <button className="btn-signin" style={{ width: "auto", background: "white", color: "#1e293b", border: "1px solid #e2e8f0" }}>
-          Update Password
-        </button>
-      </div>
-
-      {/* System Information */}
-      <div className="dash-form-card">
-        <div className="settings-section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          System Information
-        </div>
-        <div style={{ marginTop: "1.5rem", borderTop: "1px solid #f1f5f9", paddingTop: "1rem" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid #f1f5f9", color: "#64748b" }}>
-            <span>System</span>
-            <span style={{ color: "#1e293b", fontWeight: 500 }}>Smart Visitor Approval System</span>
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid #f1f5f9", color: "#64748b" }}>
-            <span>Account ID</span>
-            <span style={{ color: "#1e293b", fontWeight: 500 }}>#10</span>
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", color: "#64748b" }}>
-            <span>Member Since</span>
-            <span style={{ color: "#1e293b", fontWeight: 500 }}>April 2026</span>
-          </div>
-        </div>
       </div>
     </div>
   );
