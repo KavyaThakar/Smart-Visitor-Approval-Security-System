@@ -75,7 +75,10 @@ export default function Login() {
             </div>
 
             <div className="form-group">
-              <label>Password</label>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                <label style={{ margin: 0 }}>Password</label>
+                <a href="#" onClick={e => { e.preventDefault(); navigate("/forgot-password"); }} style={{ fontSize: "0.85rem", color: "var(--primary)", textDecoration: "none", fontWeight: "600" }}>Forgot password?</a>
+              </div>
               <input
                 type="password"
                 placeholder="Enter your password"

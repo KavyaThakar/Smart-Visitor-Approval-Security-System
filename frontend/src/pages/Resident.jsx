@@ -143,21 +143,21 @@ export default function Resident() {
            <form onSubmit={e => { e.preventDefault(); submitPreApprove(); }} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Guest Full Name</label>
-                <input type="text" placeholder="e.g. Michael Scott" value={preForm.name} onChange={e => setForm({ ...preForm, name: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
+                <input type="text" placeholder="e.g. Michael Scott" value={preForm.name} onChange={e => setPreForm({ ...preForm, name: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }}>
                 <div className="form-group" style={{ margin: 0 }}>
                   <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Date</label>
-                  <input type="date" value={preForm.date} onChange={e => setForm({ ...preForm, date: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
+                  <input type="date" value={preForm.date} onChange={e => setPreForm({ ...preForm, date: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
                 </div>
                 <div className="form-group" style={{ margin: 0 }}>
                   <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Time</label>
-                  <input type="time" value={preForm.time} onChange={e => setForm({ ...preForm, time: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
+                  <input type="time" value={preForm.time} onChange={e => setPreForm({ ...preForm, time: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
                 </div>
               </div>
               <div className="form-group" style={{ margin: 0 }}>
                 <label style={{ color: "var(--text-muted)", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em", fontWeight: "700" }}>Purpose of Visit (Optional)</label>
-                <input type="text" placeholder="e.g. Plumber, Birthday Party" value={preForm.purpose} onChange={e => setForm({ ...preForm, purpose: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
+                <input type="text" placeholder="e.g. Plumber, Birthday Party" value={preForm.purpose} onChange={e => setPreForm({ ...preForm, purpose: e.target.value })} style={{ border: "2px solid var(--border-color)", background: "white", padding: "1rem", fontSize: "1rem", borderRadius: "8px" }} />
               </div>
               <button type="submit" className="btn-signin" disabled={loading} style={{ background: "var(--primary)", padding: "1.25rem", fontSize: "1.1rem", borderRadius: "12px", marginTop: "1rem" }}>
                 {loading ? 'Processing...' : 'Create Pre-Approved Pass ➔'}

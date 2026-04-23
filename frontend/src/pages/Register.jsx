@@ -89,7 +89,7 @@ export default function Register() {
 
   return (
     <div className="auth-container">
-      <div className="auth-left" style={{ background: "linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.9)), url('/lobby-bg.png') center/cover no-repeat" }}>
+      <div className="auth-left">
         <div className="auth-brand">
           <div className="brand-header">
             <div className="brand-logo">
@@ -108,7 +108,6 @@ export default function Register() {
           <p className="auth-subtitle">Fill in your details to get started</p>
 
           <form onSubmit={submit}>
-            <div className="form-row">
               <div className="form-group">
                 <label>Full Name</label>
                 <input
@@ -130,9 +129,7 @@ export default function Register() {
                   required
                 />
               </div>
-            </div>
 
-            <div className="form-row">
               <div className="form-group">
                 <label>Role</label>
                 <select
@@ -159,7 +156,6 @@ export default function Register() {
                   />
                 </div>
               )}
-            </div>
 
             <div className="form-group">
               <label>Email</label>
@@ -172,7 +168,6 @@ export default function Register() {
               />
             </div>
 
-            <div className="form-row">
               <div className="form-group">
                 <label>Password</label>
                 <input
@@ -194,7 +189,6 @@ export default function Register() {
                   required
                 />
               </div>
-            </div>
 
             {error && <p className="error-msg">{error}</p>}
             {success && <p className="success-msg">{success}</p>}

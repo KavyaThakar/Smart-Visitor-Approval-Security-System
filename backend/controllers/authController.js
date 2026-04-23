@@ -1,7 +1,8 @@
 const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 exports.register = async (req, res) => {
@@ -90,4 +91,66 @@ exports.getProfile = async (req, res) => {
   const user = await pool.query("SELECT user_id,name,email,role,flat_id FROM users WHERE user_id=$1", [user_id]);
   if (!user.rows.length) return res.status(404).json({ error: "User not found" });
   res.json(user.rows[0]);
+};
+
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await pool.query("SELECT * FROM users WHERE email=$1", [email]);
+    if (!user.rows.length) return res.status(400).json({ error: "User with this email does not exist." });
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const expires = new Date(Date.now() + 3600000); // 1 hour
+
+    await pool.query(
+      "UPDATE users SET reset_token=$1, reset_token_expires=$2 WHERE email=$3",
+      [resetToken, expires, email]
+    );
+
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_USER, 
+        pass: process.env.SMTP_PASS, 
+      },
+    });
+
+    // In a real app, use the actual frontend domain
+    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
+    
+    let info = await transporter.sendMail({
+      from: `"VisitorGuard Security" <${process.env.SMTP_USER}>`,
+      to: email,
+      subject: "Password Reset Request",
+      html: `<p>You requested a password reset. Click the link below to set a new password:</p>
+             <a href="${resetUrl}">${resetUrl}</a>
+             <p>This link will expire in 1 hour.</p>`
+    });
+
+    res.json({ message: "Password reset email sent! Please check your inbox." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to send reset email." });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+  try {
+    const userRes = await pool.query("SELECT * FROM users WHERE reset_token=$1 AND reset_token_expires > NOW()", [token]);
+    if (!userRes.rows.length) return res.status(400).json({ error: "Invalid or expired reset token." });
+
+    const user = userRes.rows[0];
+    const hashed = await bcrypt.hash(newPassword, 10);
+
+    await pool.query(
+      "UPDATE users SET password=$1, reset_token=NULL, reset_token_expires=NULL WHERE user_id=$2",
+      [hashed, user.user_id]
+    );
+
+    res.json({ message: "Password reset successfully. You can now log in." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to reset password." });
+  }
 };
