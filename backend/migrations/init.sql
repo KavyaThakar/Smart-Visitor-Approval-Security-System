@@ -42,13 +42,13 @@ CREATE TABLE IF NOT EXISTS visits (
   visit_id SERIAL PRIMARY KEY,
   visitor_id INT NOT NULL REFERENCES visitors(visitor_id),
   flat_id INT NOT NULL REFERENCES flats(flat_id),
-  guard_id INT NOT NULL REFERENCES users(user_id),
-  visitor_type VARCHAR(20) NOT NULL CHECK (visitor_type IN ('guest','delivery','courier','service','postman','other')),
+  guard_id INT REFERENCES users(user_id),
+  visitor_type VARCHAR(20) NOT NULL CHECK (visitor_type IN ('guest','delivery','courier','service','postman','other','pre-approved')),
   purpose VARCHAR(255),
   company_name VARCHAR(100),
   check_in_time TIMESTAMP NOT NULL DEFAULT NOW(),
   check_out_time TIMESTAMP NULL,
-  status VARCHAR(10) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','approved','rejected')),
+  status VARCHAR(10) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','approved','rejected','expected')),
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
