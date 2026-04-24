@@ -1,4 +1,4 @@
-//supabase connection for postgres
+//neon connection for postgres
 const { Pool } = require("pg");
 require("dotenv").config();
 

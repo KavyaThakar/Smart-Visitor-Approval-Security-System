@@ -238,7 +238,7 @@ exports.createExpectedVisit = async (req, res) => {
 exports.guardArriveVisit = async (req, res) => {
   try {
     const { id } = req.params;
-    await pool.query(`UPDATE visits SET status='approved', check_in_time=NOW() WHERE visit_id=$1`, [id]);
+    await pool.query(`UPDATE visits SET status='approved', check_in_time=NOW(), guard_id=$2 WHERE visit_id=$1`, [id, req.user.user_id]);
     await pool.query(
       `INSERT INTO audit_logs (user_id, action, table_name, record_id) VALUES ($1,$2,$3,$4)`,
       [req.user.user_id, 'GUARD_ARRIVED_EXPECTED', 'visits', id]
