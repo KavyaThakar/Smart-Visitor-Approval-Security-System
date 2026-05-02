@@ -59,6 +59,9 @@ Desktop.ini
 # yarn.lock
 # pnpm-lock.yaml
 
+# Firebase
+.firebase/
+
 # Database / secrets (if any)
 *.sqlite
 *.db
