@@ -225,7 +225,7 @@ exports.createExpectedVisit = async (req, res) => {
     const result = await pool.query(
       `INSERT INTO visits (visitor_id, flat_id, visitor_type, purpose, status, check_in_time)
        VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
-      [vId, flat_id, 'pre-approved', purpose || 'Expected Guest', 'expected', checkIn]
+      [vId, flat_id, 'guest', purpose || 'Expected Guest', 'expected', checkIn]
     );
 
     res.json(result.rows[0]);
