@@ -6,7 +6,6 @@
 
 <br/>
 
-<!-- LIVE DEMO BANNER -->
 ### 🌐 [**View Live Demo → smart-visitor-approval-security-sys.vercel.app**](https://smart-visitor-approval-security-sys.vercel.app)
 
 <br/>
@@ -22,12 +21,12 @@
 <!-- ROW 2 -->
 <img src="https://img.shields.io/badge/JWT-Authentication-FB015B?style=for-the-badge&logo=jsonwebtokens&logoColor=white"/>
 <img src="https://img.shields.io/badge/Sequelize-ORM-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white"/>
-<img src="https://img.shields.io/badge/Nodemailer-Email%20Alerts-22B573?style=for-the-badge&logo=gmail&logoColor=white"/>
 <img src="https://img.shields.io/badge/bcrypt-Password%20Security-E53E3E?style=for-the-badge&logoColor=white"/>
+<img src="https://img.shields.io/badge/Axios-HTTP%20Client-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
 
 <br/>
 
-<!-- ROW 3 - STATUS BADGES -->
+<!-- STATUS BADGES -->
 <img src="https://img.shields.io/badge/⚡%20Status-Live%20on%20Vercel-22c55e?style=flat-square"/>
 <img src="https://img.shields.io/badge/📦%20Version-1.0.0-F97316?style=flat-square"/>
 <img src="https://img.shields.io/badge/🌐%20Platform-Web%20Application-8B5CF6?style=flat-square"/>
@@ -71,7 +70,7 @@
 | 2 | [🎯 Problem Statement](#-problem-statement) |
 | 3 | [✅ Objectives](#-objectives) |
 | 4 | [👥 User Roles & Responsibilities](#-user-roles--responsibilities) |
-| 5 | [🔄 Visitor Entry Workflow](#-visitor-entry-workflow) |
+| 5 | [🔄 How The System Works](#-how-the-system-works) |
 | 6 | [🏗️ System Architecture](#-system-architecture) |
 | 7 | [🧩 Module Breakdown](#-module-breakdown) |
 | 8 | [✨ Features](#-features) |
@@ -90,38 +89,42 @@
 
 The **Smart Visitor Approval & Security System** is a comprehensive, full-stack web application that completely **replaces paper-based visitor logbooks** used in residential societies, apartment complexes, and gated communities with a smart, digital, real-time platform.
 
-In traditional setups, a security guard at the gate writes visitor names into a physical register, picks up a phone to call the resident, waits for a response, and manually notes the time of entry and exit. This process is slow, error-prone, and unreliable — important visitor data gets lost, calls go unanswered, and there is no centralized record to review who entered a building and when.
+The idea is simple but powerful. There are **three people** in this system:
 
-This system changes all of that. When a visitor arrives at the building gate, the **Security Guard** uses the web portal to **register the visitor's details** — including name, phone number, photograph, purpose of visit, and the flat or resident they want to meet. The system then **automatically sends an email notification** to the concerned resident with a one-click **Approve** or **Decline** option. The resident can respond instantly from any device — mobile, tablet, or desktop. The guard's interface is updated in real time, and the visitor is either allowed inside or politely turned away. Every single entry and exit is **timestamped and permanently logged** in the database.
+- The **Security Guard** sits at the building gate with access to the Guard Dashboard
+- The **Resident** logs into their Resident Portal from any browser
+- The **Admin** oversees everything from the Admin Panel
 
-The **Admin** has complete visibility and control — they can manage resident accounts, security guard profiles, view complete visitor histories, and generate audit reports for any period.
+When a visitor arrives at the gate, the **Guard registers the visitor's details** — name, phone number, purpose of visit, and which flat they are visiting — directly into the web portal. That entry **immediately appears on the Resident's portal** as a pending approval request. The resident reviews the visitor's details and clicks either **Approve** or **Decline** with a single button. The guard sees the decision update on their screen in real time and either lets the visitor in or turns them away. The **Admin has full visibility** over every visitor entry, every approval, every exit, and every user account in the system — all from one centralized dashboard.
 
-Built with **React.js** on the frontend, **Node.js + Express.js** on the backend, **MySQL/PostgreSQL** via **Sequelize ORM**, **JWT** for authentication, **bcrypt** for password security, and **Nodemailer** for automated email alerts. The application is **live and deployed on Vercel** at [smart-visitor-approval-security-sys.vercel.app](https://smart-visitor-approval-security-sys.vercel.app).
+Every single interaction — entry time, exit time, approval decision, guard who registered the visitor, resident who approved — is **permanently recorded** in the database, creating a tamper-proof audit trail.
+
+The application is built with **React.js** on the frontend, **Node.js + Express.js** as the backend REST API, **MySQL/PostgreSQL** with **Sequelize ORM** as the database, and **JWT + bcrypt** for secure authentication. It is **live and deployed on Vercel**.
 
 ---
 
 ## 🎯 Problem Statement
 
-Residential buildings and gated communities continue to rely on **manual, paper-based visitor management** that suffers from critical problems every single day:
+Residential buildings and gated communities across India continue to rely on **manual, paper-based visitor registers** that fail every single day:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                ❌  PROBLEMS WITH TRADITIONAL SYSTEMS                        │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  📒  Paper registers lose data, fade, get damaged or tampered with         │
+│  📒  Paper registers lose data, get damaged, fade, or get tampered with    │
 │                                                                             │
-│  📞  Guards must manually call residents — calls go unanswered often       │
+│  📞  Guards must call residents manually — calls often go unanswered       │
 │                                                                             │
-│  ⏱️  Long queues at gates due to slow manual verification process           │
+│  ⏱️  Long queues at gates because manual verification is slow               │
 │                                                                             │
-│  🔍  No searchable history — impossible to trace old visitor records        │
+│  🔍  No searchable history — impossible to find old visitor records         │
 │                                                                             │
 │  🔐  No authentication — anyone can write anything in a paper log          │
 │                                                                             │
-│  📊  No reports, no analytics, no proper audit trail for management        │
+│  📊  No audit trail, no reports, no system-level oversight for admin       │
 │                                                                             │
-│  🚨  Security incidents cannot be traced with accurate timestamps          │
+│  🚨  Security incidents impossible to trace with accurate timestamps       │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 
@@ -129,19 +132,19 @@ Residential buildings and gated communities continue to rely on **manual, paper-
 │                ✅  HOW THIS SYSTEM SOLVES EVERY PROBLEM                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  💻  Digital registration — instant, clean, searchable, permanent          │
+│  💻  Guard digitally registers every visitor — instant, clean, permanent   │
 │                                                                             │
-│  📧  Automated email alerts — residents notified in seconds                │
+│  🖥️  Resident sees pending visitors on their portal — no phone call needed │
 │                                                                             │
-│  ⚡  One-click approval — no calls needed, faster gate clearance           │
+│  ⚡  One-click approval or decline — faster gate clearance for everyone    │
 │                                                                             │
 │  📋  Full audit trail — every entry and exit permanently timestamped       │
 │                                                                             │
 │  🔒  JWT + bcrypt security — tamper-proof, role-protected platform         │
 │                                                                             │
-│  📊  Admin dashboard — complete reports and full system oversight          │
+│  📊  Admin dashboard — every visitor, every user, every log in one place   │
 │                                                                             │
-│  🌐  Access anywhere — web-based, no app installation required             │
+│  🌐  Access from any browser — no app install, works on any device         │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -156,32 +159,32 @@ Residential buildings and gated communities continue to rely on **manual, paper-
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │  🎯  Objective 1 — Digitize Visitor Registration                            │
-│      Replace paper logbooks with a structured digital form that captures   │
-│      visitor name, phone, photo, purpose, and destination flat number.     │
+│      Replace physical logbooks with a digital form where the guard         │
+│      captures visitor name, phone, purpose, and destination flat number.   │
 │                                                                             │
-│  🎯  Objective 2 — Real-Time Resident Approval System                       │
-│      Allow residents to approve or decline visitors instantly from their   │
-│      phone or computer without any need for a phone call.                  │
+│  🎯  Objective 2 — In-App Resident Approval System                          │
+│      Visitor requests appear instantly on the resident's portal. The       │
+│      resident approves or declines with one click — no phone call needed.  │
 │                                                                             │
-│  🎯  Objective 3 — Automated Email Notifications                            │
-│      Automatically send arrival alerts to residents via Nodemailer as      │
-│      soon as a visitor is registered at the gate.                          │
+│  🎯  Objective 3 — Real-Time Guard Dashboard Updates                        │
+│      The guard's dashboard updates the moment the resident makes a         │
+│      decision — they see APPROVED or DECLINED immediately.                 │
 │                                                                             │
 │  🎯  Objective 4 — Entry & Exit Audit Trail                                 │
-│      Maintain permanent, tamper-proof, timestamped records of every        │
-│      visitor's entry and exit time in the relational database.             │
+│      Maintain a permanent, timestamped record of every visitor's entry     │
+│      and exit in the relational database — searchable at any time.         │
 │                                                                             │
 │  🎯  Objective 5 — Secure Role-Based Authentication                         │
-│      Implement JWT tokens and bcrypt hashing so only authorized            │
-│      personnel can access each module.                                     │
+│      JWT tokens and bcrypt hashing ensure only authorized users can        │
+│      access each role's dashboard and API endpoints.                       │
 │                                                                             │
-│  🎯  Objective 6 — Centralized Admin Management                             │
-│      Admin panel for managing all residents, guards, visitor records,      │
-│      and system-level configuration from one place.                        │
+│  🎯  Objective 6 — Centralized Admin Control                                │
+│      Admin manages all residents, all guards, all visitor records, and     │
+│      all approvals from one unified dashboard.                             │
 │                                                                             │
-│  🎯  Objective 7 — Live, Accessible Web Deployment                          │
-│      Deploy the system publicly on Vercel so it is accessible from any    │
-│      browser without any local installation needed.                        │
+│  🎯  Objective 7 — Live, Accessible Deployment                              │
+│      System deployed publicly on Vercel — accessible from any browser      │
+│      without any local installation.                                       │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -190,7 +193,7 @@ Residential buildings and gated communities continue to rely on **manual, paper-
 
 ## 👥 User Roles & Responsibilities
 
-The system is built around **three distinct user roles**, each with their own dashboard, permissions, and set of actions:
+The system is built around **three distinct user roles**, each with their own dedicated dashboard and set of permissions:
 
 ```
 ╔═════════════════════════════════════════════════════════════════════════════╗
@@ -198,20 +201,20 @@ The system is built around **three distinct user roles**, each with their own da
 ║                          👮  SECURITY GUARD                                 ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  The Security Guard is the first point of contact for every visitor.       ║
-║  They operate the Guard Dashboard from a tablet or desktop at the gate.   ║
-║  All visitor registrations flow through this role into the system.         ║
+║  The Security Guard operates at the building gate. They use the Guard      ║
+║  Dashboard to register every visitor who arrives. They are the first       ║
+║  point of contact — all visitor data flows through this role.              ║
 ║                                                                             ║
-║  PERMISSIONS & ACTIONS:                                                     ║
+║  WHAT THE GUARD CAN DO:                                                     ║
 ║  ┌─────────────────────────────────────────────────────────────────────┐   ║
-║  │  ✔  Register new visitors by filling in name, phone, photo         │   ║
-║  │  ✔  Select which flat or resident the visitor wants to meet        │   ║
-║  │  ✔  Specify purpose of visit (delivery, personal, service, etc.)   │   ║
-║  │  ✔  Trigger automatic email notification to the resident            │   ║
-║  │  ✔  View real-time approval or decline status on dashboard          │   ║
+║  │  ✔  Fill in the visitor registration form for every arrival         │   ║
+║  │  ✔  Enter visitor name, phone number, and purpose of visit          │   ║
+║  │  ✔  Select which flat number / resident the visitor wants to meet   │   ║
+║  │  ✔  View the real-time approval status (Pending / Approved / Declined│   ║
+║  │  ✔  Allow the visitor in when APPROVED appears on the dashboard     │   ║
+║  │  ✔  Turn the visitor away when DECLINED appears                     │   ║
 ║  │  ✔  Mark visitor exit when they leave the building                  │   ║
-║  │  ✔  View full list of all visitors for the current shift/day        │   ║
-║  │  ✔  Search visitors by name, flat number, or status                 │   ║
+║  │  ✔  View all visitors registered during the current shift or day    │   ║
 ║  └─────────────────────────────────────────────────────────────────────┘   ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 
@@ -220,18 +223,19 @@ The system is built around **three distinct user roles**, each with their own da
 ║                            🏠  RESIDENT                                     ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  Residents are homeowners or tenants living in the building. They receive  ║
-║  instant email notifications and manage visitor access through the         ║
-║  Resident Portal — accessible from any browser, no app install needed.     ║
+║  Residents are homeowners or tenants living in the building. They log      ║
+║  into the Resident Portal from any device and see a live list of           ║
+║  pending visitor requests that the guard has submitted for their flat.     ║
+║  No phone call needed — they handle everything through their portal.       ║
 ║                                                                             ║
-║  PERMISSIONS & ACTIONS:                                                     ║
+║  WHAT THE RESIDENT CAN DO:                                                  ║
 ║  ┌─────────────────────────────────────────────────────────────────────┐   ║
-║  │  ✔  Receive email notification when a visitor arrives for them      │   ║
-║  │  ✔  View visitor's full details: name, photo, phone, purpose        │   ║
-║  │  ✔  One-click APPROVE → visitor is allowed inside the building      │   ║
-║  │  ✔  One-click DECLINE → visitor is politely turned away at gate     │   ║
-║  │  ✔  View complete personal visitor history with timestamps          │   ║
-║  │  ✔  Update personal profile and notification preferences            │   ║
+║  │  ✔  See all pending visitor requests for their flat in real time    │   ║
+║  │  ✔  View visitor details: name, phone number, purpose of visit      │   ║
+║  │  ✔  Click APPROVE → visitor is immediately cleared for entry        │   ║
+║  │  ✔  Click DECLINE → visitor is denied and guard is notified         │   ║
+║  │  ✔  View full history of all past visitors to their flat            │   ║
+║  │  ✔  See timestamps of when each visitor arrived and left            │   ║
 ║  └─────────────────────────────────────────────────────────────────────┘   ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 
@@ -240,87 +244,108 @@ The system is built around **three distinct user roles**, each with their own da
 ║                         🔑  ADMINISTRATOR                                   ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  The Administrator has the highest level of access across the entire       ║
-║  platform. They manage all users, all visitors, all logs, and all          ║
-║  settings. Typically the building secretary or society manager.            ║
+║  The Administrator has the highest level of access in the entire           ║
+║  system. They see and manage everything — every user, every visitor,       ║
+║  every approval decision, and every entry/exit log across all flats        ║
+║  and all guards. Typically the building secretary or society manager.      ║
 ║                                                                             ║
-║  PERMISSIONS & ACTIONS:                                                     ║
+║  WHAT THE ADMIN CAN DO:                                                     ║
 ║  ┌─────────────────────────────────────────────────────────────────────┐   ║
-║  │  ✔  Create, update, and deactivate resident accounts                │   ║
-║  │  ✔  Create, update, and deactivate security guard accounts          │   ║
-║  │  ✔  View complete visitor history for any resident or guard         │   ║
-║  │  ✔  Access real-time dashboard of all currently active visitors     │   ║
-║  │  ✔  Filter visitor records by date, flat, guard, or status          │   ║
-║  │  ✔  Manage flat numbers, building wings, system configuration       │   ║
-║  │  ✔  Override or correct any visitor entry or approval decision      │   ║
+║  │  ✔  Create and manage resident accounts (add / update / remove)     │   ║
+║  │  ✔  Create and manage security guard accounts                       │   ║
+║  │  ✔  View ALL visitor records across every flat and every guard      │   ║
+║  │  ✔  See every approval and decline decision with timestamps         │   ║
+║  │  ✔  Access full entry and exit logs for any date or flat            │   ║
+║  │  ✔  Filter and search visitors by name, flat, date, or status       │   ║
+║  │  ✔  Manage flat numbers, building structure, and system settings    │   ║
 ║  └─────────────────────────────────────────────────────────────────────┘   ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
-## 🔄 Visitor Entry Workflow
+## 🔄 How The System Works
 
-This is the complete step-by-step lifecycle of every visitor interaction from arrival to exit:
+This is the complete step-by-step flow — from the moment a visitor arrives to when they leave:
 
 ```
 ╔═════════════════════════════════════════════════════════════════════════════╗
 ║              🚶 COMPLETE VISITOR JOURNEY — STEP BY STEP                    ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  STEP 1 ──────────────────────────────────────────────────────────────     ║
-║  👤  Visitor Arrives at the Building Gate                                   ║
-║      The visitor walks up to the security gate. They state their name      ║
-║      and which flat or resident they want to visit.                        ║
-║             │                                                               ║
-║             ▼                                                               ║
-║  STEP 2 ──────────────────────────────────────────────────────────────     ║
-║  👮  Guard Opens the Guard Dashboard & Fills Visitor Form                   ║
-║      ┌──────────────────────────────────────────────────────────┐          ║
-║      │  👤 Visitor Full Name    :  Rahul Mehta                  │          ║
-║      │  📞 Phone Number         :  +91 98765 43210              │          ║
-║      │  🏠 Visiting Flat No.    :  B-204                        │          ║
-║      │  📝 Purpose of Visit     :  Personal / Delivery / Other  │          ║
-║      │  📷 Photo                :  Upload or webcam capture      │          ║
-║      └──────────────────────────────────────────────────────────┘          ║
-║             │                                                               ║
-║             ▼                                                               ║
-║  STEP 3 ──────────────────────────────────────────────────────────────     ║
-║  📧  System Auto-Sends Email to Resident of Flat B-204                      ║
-║      Email includes:                                                       ║
-║       • Visitor name, photo, and phone number                              ║
-║       • Stated purpose and time of arrival                                 ║
-║       • Two action buttons  →  ✅ APPROVE   or   ❌ DECLINE                 ║
-║             │                                                               ║
-║             ▼                                                               ║
-║  STEP 4 ──────────────────────────────────────────────────────────────     ║
-║  🏠  Resident Reviews Email & Makes a Decision from Any Device              ║
-║                                                                             ║
-║      ┌────────────────────────┐       ┌───────────────────────────┐        ║
-║      │     ✅ APPROVED         │       │      ❌ DECLINED           │        ║
-║      │                        │       │                           │        ║
-║      │  Guard dashboard shows │       │  Guard dashboard shows    │        ║
-║      │  GREEN — ENTRY ALLOWED │       │  RED — ENTRY DENIED       │        ║
-║      │                        │       │                           │        ║
-║      │  Visitor walks in      │       │  Visitor turned away      │        ║
-║      └──────────┬─────────────┘       └─────────────┬─────────────┘        ║
-║                 │                                   │                      ║
-║                 └──────────────┬────────────────────┘                      ║
-║                                ▼                                           ║
-║  STEP 5 ──────────────────────────────────────────────────────────────     ║
-║  📋  Entry Log Created in Database (auto)                                   ║
-║      Records:  Visitor ID • Name • Phone • Flat Number                     ║
-║                Entry Timestamp • Approval Status • Guard ID                ║
-║             │                                                               ║
-║             ▼                                                               ║
-║  STEP 6 ──────────────────────────────────────────────────────────────     ║
-║  🚪  Visitor Exits — Guard Marks Exit on Dashboard                          ║
-║      Exit timestamp auto-recorded. Visit duration calculated & saved.     ║
-║             │                                                               ║
-║             ▼                                                               ║
-║  STEP 7 ──────────────────────────────────────────────────────────────     ║
-║  📊  Full Record Visible in Admin Dashboard                                  ║
-║      Admin can view, filter, search, and export all records forever.       ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │  STEP 1 — Visitor Arrives at the Building Gate                      │   ║
+║  │                                                                     │   ║
+║  │  👤 A visitor walks up to the security gate and tells the guard     │   ║
+║  │     their name and which flat they want to visit.                   │   ║
+║  └──────────────────────────────────────┬──────────────────────────────┘   ║
+║                                         │                                  ║
+║                                         ▼                                  ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │  STEP 2 — Guard Registers the Visitor on the Dashboard              │   ║
+║  │                                                                     │   ║
+║  │  👮 The guard opens the Guard Dashboard and fills in the form:      │   ║
+║  │                                                                     │   ║
+║  │     👤 Visitor Name    :  Rahul Mehta                               │   ║
+║  │     📞 Phone Number    :  +91 98765 43210                           │   ║
+║  │     🏠 Visiting Flat   :  B-204  (selects from dropdown)            │   ║
+║  │     📝 Purpose         :  Personal / Delivery / Service             │   ║
+║  │                                                                     │   ║
+║  │  The guard hits SUBMIT — entry is saved in the database.            │   ║
+║  └──────────────────────────────────────┬──────────────────────────────┘   ║
+║                                         │                                  ║
+║                                         ▼                                  ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │  STEP 3 — Request Appears on Resident's Portal Instantly            │   ║
+║  │                                                                     │   ║
+║  │  🏠 The resident of Flat B-204 logs in to their Resident Portal.    │   ║
+║  │     They see a new PENDING request showing:                         │   ║
+║  │                                                                     │   ║
+║  │     • Visitor name, phone, and purpose of visit                     │   ║
+║  │     • Time of arrival at the gate                                   │   ║
+║  │     • Two action buttons: ✅ APPROVE   and   ❌ DECLINE              │   ║
+║  └──────────────────────────────────────┬──────────────────────────────┘   ║
+║                                         │                                  ║
+║                                         ▼                                  ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │  STEP 4 — Resident Makes a Decision                                  │   ║
+║  │                                                                     │   ║
+║  │    ┌─────────────────────────┐     ┌──────────────────────────┐    │   ║
+║  │    │     ✅ APPROVED          │     │      ❌ DECLINED          │    │   ║
+║  │    │                         │     │                          │    │   ║
+║  │    │  Status updates to      │     │  Status updates to       │    │   ║
+║  │    │  APPROVED on guard's    │     │  DECLINED on guard's     │    │   ║
+║  │    │  dashboard instantly    │     │  dashboard instantly      │    │   ║
+║  │    │                         │     │                          │    │   ║
+║  │    │  Guard lets visitor in  │     │  Guard turns visitor away│    │   ║
+║  │    └────────────┬────────────┘     └─────────────┬────────────┘    │   ║
+║  └─────────────────│───────────────────────────────────────────────────┘   ║
+║                    │                               │                       ║
+║                    └──────────────┬────────────────┘                       ║
+║                                   ▼                                        ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │  STEP 5 — Entry Logged in Database Automatically                    │   ║
+║  │                                                                     │   ║
+║  │  📋 System records: Visitor name, phone, flat, guard ID,            │   ║
+║  │     resident ID, approval status, and exact entry timestamp.        │   ║
+║  └──────────────────────────────────────┬──────────────────────────────┘   ║
+║                                         │                                  ║
+║                                         ▼                                  ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │  STEP 6 — Visitor Exits the Building                                │   ║
+║  │                                                                     │   ║
+║  │  🚪 Guard marks exit on dashboard. Exit timestamp is recorded.      │   ║
+║  │     Total visit duration is calculated and saved permanently.       │   ║
+║  └──────────────────────────────────────┬──────────────────────────────┘   ║
+║                                         │                                  ║
+║                                         ▼                                  ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │  STEP 7 — Admin Sees Everything                                     │   ║
+║  │                                                                     │   ║
+║  │  📊 Admin dashboard shows every visitor, every decision,            │   ║
+║  │     every guard action, every entry and exit — filterable by        │   ║
+║  │     date, flat, guard, resident, or status at any time.             │   ║
+║  └─────────────────────────────────────────────────────────────────────┘   ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -328,7 +353,7 @@ This is the complete step-by-step lifecycle of every visitor interaction from ar
 
 ## 🏗️ System Architecture
 
-The application follows a clean **3-tier MVC architecture** with a clear separation between presentation, business logic, and data storage:
+The application follows a clean **3-tier MVC architecture** separating the UI, business logic, and database clearly:
 
 ```
 ╔═════════════════════════════════════════════════════════════════════════════╗
@@ -339,14 +364,18 @@ The application follows a clean **3-tier MVC architecture** with a clear separat
 ║   ┌────────────┐  ┌─────────────────┐  ┌─────────────────┐  ┌──────────┐  ║
 ║   │  🔐 Login  │  │  👮 Guard        │  │  🏠 Resident    │  │ 🔑 Admin │  ║
 ║   │  Page      │  │  Dashboard       │  │  Portal          │  │ Panel    │  ║
-║   └────────────┘  └─────────────────┘  └─────────────────┘  └──────────┘  ║
+║   │            │  │                  │  │                  │  │          │  ║
+║   │  All roles │  │  Register visitor│  │  See pending     │  │  Manage  │  ║
+║   │  login here│  │  View status     │  │  Approve/Decline │  │  everyone│  ║
+║   └────────────┘  │  Mark exit       │  │  View history    │  │  View all│  ║
+║                   └─────────────────┘  └─────────────────┘  └──────────┘  ║
 ║                                                                             ║
 ║        React Router DOM — client-side routing between all pages             ║
-║        Axios — HTTP requests to the Express backend REST API                ║
-║        CSS3 — fully responsive styling for all screen sizes                 ║
+║        Axios — all HTTP calls from React to the Express backend             ║
+║        CSS3  — fully responsive layout for all screen sizes                 ║
 ║                                                                             ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
-║                     ⬇  HTTP / HTTPS REST API Calls ⬇                      ║
+║                      ⬇  HTTP / REST API Calls ⬇                           ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║  🟧🟧🟧🟧🟧🟧🟧🟧  BUSINESS LOGIC LAYER  🟧🟧🟧🟧🟧🟧🟧🟧                  ║
 ║                   BACKEND — Node.js + Express.js v5                         ║
@@ -359,18 +388,18 @@ The application follows a clean **3-tier MVC architecture** with a clear separat
 ║                                                              │             ║
 ║   ┌──────────────────────────────────────────────────────────▼──────────┐  ║
 ║   │                      MIDDLEWARE LAYER                               │  ║
-║   │   🔐 JWT Verify  │  👮 Role Guard  │  📝 Input Validation           │  ║
+║   │      🔐 JWT Token Verify   │   👮 Role Guard   │   ✅ Validation    │  ║
 ║   └──────────────────────────────────────────────────────────┬──────────┘  ║
 ║                                                              │             ║
 ║   ┌──────────────────────────────────────────────────────────▼──────────┐  ║
-║   │                     CONTROLLER LAYER                               │  ║
+║   │                     CONTROLLER LAYER                                │  ║
 ║   │   Auth Controller  │  Visitor Controller  │  Approval Controller   │  ║
-║   │   Admin Controller │                                               │  ║
+║   │   Admin Controller                                                  │  ║
 ║   └──────────────────────────────────────────────────────────┬──────────┘  ║
 ║                                                              │             ║
 ║   ┌──────────────────────────────────────────────────────────▼──────────┐  ║
 ║   │                      SERVICES LAYER                                 │  ║
-║   │   📧 Nodemailer Email  │  🔒 bcrypt Passwords  │  🎫 JWT Tokens     │  ║
+║   │         🔒 bcrypt Password Hashing   │   🎫 JWT Token Signing       │  ║
 ║   └─────────────────────────────────────────────────────────────────────┘  ║
 ║                                                                             ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
@@ -392,100 +421,89 @@ The application follows a clean **3-tier MVC architecture** with a clear separat
 
 ## 🧩 Module Breakdown
 
-The system is divided into **six core functional modules**, each handling a distinct area of responsibility:
+The system is divided into **five core functional modules**:
 
 ```
 ╔═════════════════════════════════════════════════════════════════════════════╗
-║  🔐  MODULE 1 — AUTHENTICATION & SECURITY MODULE                           ║
+║  🔐  MODULE 1 — AUTHENTICATION MODULE                                      ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  This module handles all user identity, login, and access control across   ║
-║  the platform using JWT for stateless authentication and bcrypt for         ║
-║  strong password hashing with salt rounds.                                 ║
+║  Handles all user identity, login, and access control. All three roles —   ║
+║  Guard, Resident, and Admin — log in through the same login page. The     ║
+║  system issues a JWT token that encodes their role and uses it to show     ║
+║  the right dashboard and block unauthorized API access.                   ║
 ║                                                                             ║
-║  • User registration with email and securely hashed password               ║
-║  • Login with bcryptjs credential verification                             ║
-║  • JWT token generation with configurable expiry (default 7 days)          ║
-║  • Role assignment: GUARD | RESIDENT | ADMIN per account                   ║
-║  • JWT middleware protecting every private API route                       ║
-║  • Unauthorized access returns standard 401/403 HTTP errors                ║
-║                                                                             ║
-╠═════════════════════════════════════════════════════════════════════════════╣
-║  👮  MODULE 2 — VISITOR REGISTRATION MODULE                                ║
-╠═════════════════════════════════════════════════════════════════════════════╣
-║                                                                             ║
-║  The core input module used by security guards at the gate. It provides   ║
-║  a clean digital form to capture all visitor information quickly and       ║
-║  accurately — replacing the physical paper logbook entirely.               ║
-║                                                                             ║
-║  • Digital form: visitor name, phone, photo, purpose of visit              ║
-║  • Dropdown to select destination flat number and resident name            ║
-║  • Purpose categories: Delivery, Personal, Service, Maintenance            ║
-║  • Automatic timestamp recording on every form submission                  ║
-║  • Live list view of all visitors registered during the current shift      ║
-║  • Search and filter visitors by name, flat number, date, or status        ║
+║  • Single login page for all three roles (Guard / Resident / Admin)        ║
+║  • JWT token issued on successful login, stored in the browser             ║
+║  • All passwords hashed with bcrypt before being stored in the database    ║
+║  • JWT middleware validates the token on every protected API request        ║
+║  • Role middleware blocks access to routes not meant for a given role      ║
+║  • Token expires after a configurable duration (default: 7 days)          ║
+║  • Unauthorized requests return proper 401 / 403 HTTP responses            ║
 ║                                                                             ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
-║  📧  MODULE 3 — NOTIFICATION MODULE                                        ║
+║  👮  MODULE 2 — VISITOR REGISTRATION MODULE (Guard)                        ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  The communication backbone of the system. Nodemailer with Gmail SMTP      ║
-║  delivers real-time email alerts to residents the moment a visitor is      ║
-║  registered — no phone calls, no delays.                                   ║
+║  This is the core input module of the system. It lives on the Guard        ║
+║  Dashboard and is the only way visitors get registered into the platform.  ║
+║  Every visitor entry flows from this module into the database, and         ║
+║  immediately becomes visible to the relevant resident.                     ║
 ║                                                                             ║
-║  • Automatic email triggered on every new visitor registration             ║
-║  • Email contains visitor name, photo, phone number, and purpose           ║
-║  • Embedded APPROVE and DECLINE action buttons directly in the email       ║
-║  • Confirmation email to resident after their decision is recorded         ║
-║  • Notification to guard dashboard in real time when resident responds     ║
-║  • HTML email templates for a professional, readable layout                ║
-║  • SMTP config via .env — credentials never hardcoded                     ║
-║                                                                             ║
-╠═════════════════════════════════════════════════════════════════════════════╣
-║  ✅  MODULE 4 — APPROVAL MANAGEMENT MODULE                                 ║
-╠═════════════════════════════════════════════════════════════════════════════╣
-║                                                                             ║
-║  Powers the Resident Portal — the interface where residents manage who      ║
-║  is allowed into their building. Designed to be fast, mobile-friendly,    ║
-║  and accessible from any device without any app installation.              ║
-║                                                                             ║
-║  • List of all pending visitor approval requests for the logged-in resident║
-║  • View visitor's full profile: name, photo, purpose, and arrival time     ║
-║  • APPROVE button — immediately grants gate entry clearance                ║
-║  • DECLINE button — marks visitor as denied, guard is notified instantly   ║
-║  • Approval status reflected on guard's dashboard in real time             ║
-║  • Historical view of all previously approved and declined visitors        ║
-║  • Complete data isolation — residents cannot see other residents' visitors ║
+║  • Clean digital registration form — replaces paper logbooks entirely      ║
+║  • Fields: Visitor name, phone number, purpose of visit, flat number       ║
+║  • Flat number links to the resident who will receive the request          ║
+║  • On submission — visitor is saved and status is set to PENDING           ║
+║  • Guard dashboard shows live list of all visitors for the current shift   ║
+║  • Status column updates automatically: PENDING → APPROVED / DECLINED      ║
+║  • Guard marks visitor exit which records the exit timestamp               ║
 ║                                                                             ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
-║  📊  MODULE 5 — ADMIN MANAGEMENT MODULE                                    ║
+║  ✅  MODULE 3 — RESIDENT APPROVAL MODULE                                   ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  The nerve centre of the entire system. The administrator uses this        ║
-║  module to control every aspect — users, visitors, logs, settings,         ║
-║  and overall platform health.                                              ║
+║  This is the Resident Portal — the interface where residents manage who    ║
+║  is allowed to enter their flat. When a guard registers a visitor for a   ║
+║  flat, that request appears here instantly. The resident does not need a   ║
+║  phone call, WhatsApp message, or email — everything is in this portal.   ║
 ║                                                                             ║
-║  • Full CRUD operations on residents, guards, and admin accounts           ║
-║  • Assign guards to specific building wings or gate posts                  ║
-║  • View complete visitor log filterable by date range or flat number       ║
-║  • Filter records by status: Pending / Approved / Declined / Exited        ║
-║  • Manage flat numbers, building configuration, and system settings        ║
-║  • Override or correct any visitor entry or approval decision              ║
+║  • Pending requests list — shows all new visitor entries for this flat     ║
+║  • Each card shows: visitor name, phone, purpose, time of arrival          ║
+║  • APPROVE button — clears the visitor for entry immediately               ║
+║  • DECLINE button — marks visitor as denied, guard sees it instantly       ║
+║  • History section — full record of all past visitors with their status    ║
+║  • Data isolation — residents can only see visitors to their own flat      ║
 ║                                                                             ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
-║  📋  MODULE 6 — ENTRY & EXIT LOG MODULE                                    ║
+║  📊  MODULE 4 — ADMIN PANEL MODULE                                         ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  Maintains the permanent, tamper-proof audit trail of all visitor          ║
-║  movements — the digital equivalent of a physical logbook, but with        ║
-║  search, filter, export, and precise timestamp capabilities.               ║
+║  The Admin Panel is the nerve centre of the whole system. The admin sees   ║
+║  everything that every guard registers, every decision every resident      ║
+║  makes, and every entry and exit across the entire building.               ║
 ║                                                                             ║
-║  • Permanent entry timestamp recorded at the moment of visitor arrival     ║
-║  • Guard manually marks exit; system auto-records exit timestamp           ║
-║  • Total visit duration calculated and stored in the database              ║
-║  • All records tied to visitor ID, resident ID, guard ID, and time         ║
-║  • Fully searchable, filterable, and sortable from the admin dashboard     ║
-║  • Records cannot be deleted or modified by guards — read-only access      ║
+║  • Full visibility of all visitor records across all flats and all guards  ║
+║  • Manage resident accounts — create, update, deactivate                   ║
+║  • Manage guard accounts — create, update, deactivate                      ║
+║  • Filter visitor records by date, flat number, guard, or status           ║
+║  • See every approval and decline decision with who made it and when       ║
+║  • Manage flat numbers, building wings, and system configuration           ║
+║  • View real-time dashboard of currently active visitors in the building   ║
+║                                                                             ║
+╠═════════════════════════════════════════════════════════════════════════════╣
+║  📋  MODULE 5 — ENTRY & EXIT LOG MODULE                                    ║
+╠═════════════════════════════════════════════════════════════════════════════╣
+║                                                                             ║
+║  Every visitor movement is permanently recorded — this is the digital      ║
+║  replacement for the paper logbook. It cannot be deleted or edited by      ║
+║  guards and serves as the official audit trail for the building.           ║
+║                                                                             ║
+║  • Entry timestamp recorded automatically when the guard submits the form  ║
+║  • Exit timestamp recorded when the guard marks the visitor as exited      ║
+║  • Total visit duration calculated and stored for every visitor            ║
+║  • All records include: visitor ID, flat number, guard ID, resident ID     ║
+║  • Fully searchable and filterable from the admin dashboard                ║
+║  • Permanent — records are read-only for guards, only admin can manage     ║
 ║                                                                             ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -498,21 +516,21 @@ The system is divided into **six core functional modules**, each handling a dist
 
 | # | Feature | Description | Role |
 |:---:|:---:|:---|:---:|
-| 01 | 🔐 JWT Auth | Stateless, token-based secure authentication with role enforcement | All |
-| 02 | 👤 Visitor Registration | Digital form capturing name, photo, phone, purpose, destination | Guard |
-| 03 | 📧 Auto Email Alerts | Nodemailer sends instant arrival email to resident | System |
-| 04 | ✅ One-Click Approval | Resident approves or declines from browser — no phone call | Resident |
-| 05 | 🕐 Entry Timestamp | Exact date & time logged the moment visitor enters | System |
-| 06 | 🚪 Exit Timestamp | Guard marks exit; duration calculated & saved automatically | Guard |
-| 07 | 📊 Admin Dashboard | Central control over all users, visitors, logs & analytics | Admin |
-| 08 | 🔒 bcrypt Hashing | All passwords hashed with bcrypt — never stored in plaintext | System |
-| 09 | 📱 Responsive UI | Works perfectly on desktop, tablet, and mobile browsers | All |
-| 10 | 🗃️ Sequelize ORM | Type-safe SQL queries with model associations | Backend |
-| 11 | 🚦 Role-Based Access | Separate dashboards and API permissions per user role | System |
-| 12 | 🔍 Search & Filter | Search visitors by name, flat, date, or approval status | Guard / Admin |
-| 13 | 📋 Audit Trail | Permanent, tamper-proof visit history for all visitors | Admin |
-| 14 | 🌍 Vercel Deployment | Live, publicly accessible deployment on Vercel | All |
-| 15 | ⚙️ dotenv Config | All secrets managed via environment variables | Backend |
+| 01 | 🔐 JWT Auth | Secure token-based login with role enforcement for all three users | All |
+| 02 | 👤 Visitor Registration | Guard fills digital form — name, phone, purpose, flat number | Guard |
+| 03 | 🖥️ In-App Pending Requests | Visitor entries appear instantly on resident's portal | Resident |
+| 04 | ✅ One-Click Approve | Resident approves visitor — guard sees APPROVED in real time | Resident |
+| 05 | ❌ One-Click Decline | Resident declines — guard sees DECLINED, visitor turned away | Resident |
+| 06 | 🕐 Entry Timestamp | Exact date & time auto-logged when visitor is registered | System |
+| 07 | 🚪 Exit Timestamp | Guard marks exit — duration auto-calculated and saved | Guard |
+| 08 | 📊 Admin Dashboard | Full control: all users, all visitors, all logs, all decisions | Admin |
+| 09 | 🔒 bcrypt Hashing | Passwords never stored in plaintext — always hashed | System |
+| 10 | 📱 Responsive UI | Works on desktop, tablet, and mobile — no app download needed | All |
+| 11 | 🗃️ Sequelize ORM | Clean, type-safe SQL with model associations | Backend |
+| 12 | 🚦 Role-Based Access | Each role sees only what they are authorized to see | System |
+| 13 | 🔍 Search & Filter | Admin can search visitors by name, flat, date, or status | Admin |
+| 14 | 📋 Audit Trail | Permanent, tamper-proof record of every visitor movement | Admin |
+| 15 | 🌍 Vercel Deployment | Live on the internet — accessible from any browser, anywhere | All |
 
 </div>
 
@@ -522,75 +540,57 @@ The system is divided into **six core functional modules**, each handling a dist
 
 ```
 ╔═════════════════════════════════════════════════════════════════════════════╗
-║  🟦  FRONTEND TECHNOLOGIES                                                  ║
+║  🟦  FRONTEND                                                               ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
 ║  React.js          — Component-based UI framework powering the Guard       ║
 ║                      Dashboard, Resident Portal, and Admin Panel.          ║
-║                      Handles all user interactions and state management.   ║
 ║                                                                             ║
-║  React Router DOM  — Client-side routing between pages without full-page   ║
-║  v7.13.1             reloads, delivering a smooth single-page app (SPA)    ║
-║                      experience across all dashboards and portals.         ║
+║  React Router DOM  — Client-side routing between the login page, guard     ║
+║  v7.13.1             dashboard, resident portal, and admin panel without   ║
+║                      full page reloads.                                    ║
 ║                                                                             ║
-║  Axios             — Promise-based HTTP client for making all API calls    ║
-║  v1.13.6             from React components to the Express.js backend.      ║
-║                      Handles request headers, auth tokens, and errors.     ║
+║  Axios v1.13.6     — HTTP client for making API calls from React to the    ║
+║                      Express backend. Handles auth headers and errors.     ║
 ║                                                                             ║
-║  CSS3              — Custom styling, animations, and fully responsive      ║
-║                      layout. Works on all screen sizes and browsers.       ║
+║  CSS3              — Responsive styling across all pages and components.   ║
 ║                                                                             ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
-║  🟧  BACKEND TECHNOLOGIES                                                   ║
+║  🟧  BACKEND                                                                ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  Node.js           — JavaScript runtime powering the entire server-side    ║
-║                      application. Handles HTTP requests, business logic,   ║
-║                      database queries, and email dispatch concurrently.    ║
+║  Node.js           — JavaScript runtime for the server-side application.   ║
 ║                                                                             ║
-║  Express.js        — Minimal, flexible web framework for Node.js. Used to  ║
-║  v5.2.1              define all REST API routes, apply middleware layers,  ║
-║                      and manage the full request and response lifecycle.   ║
+║  Express.js v5.2.1 — REST API framework. Defines all routes, applies       ║
+║                      middleware, and manages request/response lifecycle.   ║
 ║                                                                             ║
-║  JSON Web Token    — Industry-standard token-based authentication. Each    ║
-║  (JWT) v9.0.3        successful login returns a signed JWT. The frontend   ║
-║                      sends it in Authorization headers for protected calls.║
+║  JWT v9.0.3        — Signs and verifies login tokens. Each user gets a     ║
+║                      token on login that carries their role securely.      ║
 ║                                                                             ║
-║  bcrypt v6.0.0     — Password hashing library. All passwords are hashed    ║
-║  bcryptjs v3.0.3     using bcrypt's configurable salt rounds before        ║
-║                      being stored. Raw passwords are never saved anywhere. ║
+║  bcrypt v6 /       — Hashes all passwords before storage. Raw passwords    ║
+║  bcryptjs v3.0.3     are never saved anywhere in the system.               ║
 ║                                                                             ║
-║  Nodemailer v8.0.7 — Node.js library for transactional email delivery.     ║
-║                      Integrated with Gmail SMTP to instantly notify        ║
-║                      residents when a visitor arrives at their building.   ║
+║  CORS v2.8.6       — Allows the React frontend to communicate with the     ║
+║                      Express backend across different ports.               ║
 ║                                                                             ║
-║  CORS v2.8.6       — Cross-Origin Resource Sharing middleware that allows  ║
-║                      the React frontend (port 3000) to communicate         ║
-║                      securely with the Express backend (port 5000).        ║
+║  dotenv v17.3.1    — Keeps secrets (DB passwords, JWT key) in .env and     ║
+║                      out of the source code entirely.                      ║
 ║                                                                             ║
-║  dotenv v17.3.1    — Loads environment variables from .env file into       ║
-║                      process.env, keeping all secrets out of source code.  ║
-║                                                                             ║
-║  Nodemon v3.1.14   — Development utility that auto-restarts the Express    ║
-║                      server whenever any file is saved during development. ║
+║  Nodemon v3.1.14   — Auto-restarts the server on file save in development. ║
 ║                                                                             ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║  🟩  DATABASE & ORM                                                         ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
-║  MySQL / PostgreSQL — Relational database for structured, persistent       ║
-║                       storage of all users, visitors, approvals, and logs. ║
-║                       Supports both MySQL (mysql2) and PostgreSQL (pg).    ║
+║  MySQL / PostgreSQL — Relational database storing all users, visitors,     ║
+║                       approvals, and entry/exit logs permanently.          ║
 ║                                                                             ║
-║  Sequelize v6.37.8 — Promise-based Node.js ORM for both MySQL and          ║
-║                      PostgreSQL. Provides model definitions, associations, ║
-║                      migrations, hooks, and clean query API without SQL.   ║
+║  Sequelize v6.37.8 — ORM providing model definitions, associations, and   ║
+║                      clean query API for both MySQL and PostgreSQL.        ║
 ║                                                                             ║
-║  mysql2 v3.20.0    — Fast MySQL client for Node.js, used by Sequelize      ║
-║                      when connecting to a MySQL database backend.          ║
-║                                                                             ║
-║  pg v8.20.0        — PostgreSQL client library for Node.js, used when      ║
-║  pg-hstore v2.3.4    connecting Sequelize to a PostgreSQL database.        ║
+║  mysql2 v3.20.0    — MySQL client driver used by Sequelize.                ║
+║  pg v8.20.0        — PostgreSQL client driver used by Sequelize.           ║
+║  pg-hstore v2.3.4  — Handles hstore data for PostgreSQL.                   ║
 ║                                                                             ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -606,9 +606,8 @@ The system is divided into **six core functional modules**, each handling a dist
 | Sequelize | ![Sequelize](https://img.shields.io/badge/-Sequelize-52B0E7?style=flat-square&logo=sequelize&logoColor=white) | v6.37.8 |
 | JWT | ![JWT](https://img.shields.io/badge/-JWT-FB015B?style=flat-square&logo=jsonwebtokens&logoColor=white) | v9.0.3 |
 | bcrypt | ![bcrypt](https://img.shields.io/badge/-bcrypt-555555?style=flat-square) | v6.0.0 |
-| Nodemailer | ![Nodemailer](https://img.shields.io/badge/-Nodemailer-22B573?style=flat-square&logo=gmail&logoColor=white) | v8.0.7 |
 | Axios | ![Axios](https://img.shields.io/badge/-Axios-5A29E4?style=flat-square&logo=axios&logoColor=white) | v1.13.6 |
-| React Router DOM | ![RRD](https://img.shields.io/badge/-React%20Router-CA4245?style=flat-square&logo=react-router&logoColor=white) | v7.13.1 |
+| React Router | ![RRD](https://img.shields.io/badge/-React%20Router-CA4245?style=flat-square&logo=react-router&logoColor=white) | v7.13.1 |
 | Nodemon | ![Nodemon](https://img.shields.io/badge/-Nodemon-76D04B?style=flat-square&logo=nodemon&logoColor=white) | v3.1.14 |
 
 </div>
@@ -620,72 +619,66 @@ The system is divided into **six core functional modules**, each handling a dist
 ```
 📁 Smart-Visitor-Approval-Security-System/
 │
-├── 📦 package.json                   ←  Root manifest — scripts, all dependencies
-├── 📄 package-lock.json              ←  Exact dependency lockfile (auto-generated)
-├── 📄 .gitignore                     ←  node_modules, .env, build/ excluded from git
+├── 📦 package.json                   ←  Root scripts: start, dev, test
+├── 📄 package-lock.json              ←  Exact dependency lockfile
+├── 📄 .gitignore                     ←  Excludes node_modules, .env, build/
 │
 ├── 📁 backend/                       ←  ════ SERVER-SIDE APPLICATION ════
 │   │
-│   ├── 🟨 server.js                  ←  Express app setup, all middleware mounted,
-│   │                                     Sequelize sync, server starts on PORT
-│   │
-│   ├── 📄 .env                       ←  ⚠️ NEVER COMMIT — contains DB credentials,
-│   │                                     JWT secret, and Nodemailer email config
+│   ├── 🟨 server.js                  ←  Express setup, middleware mount,
+│   │                                     Sequelize sync, server listen on PORT
+│   ├── 📄 .env                       ←  ⚠️ NEVER COMMIT — DB creds & JWT secret
 │   │
 │   ├── 📁 config/
-│   │   └── db.config.js              ←  Sequelize connection: reads DB_HOST,
-│   │                                     DB_USER, DB_NAME, DB_DIALECT from .env
+│   │   └── db.config.js              ←  Sequelize DB connection using .env vars
 │   │
-│   ├── 📁 models/                    ←  Sequelize ORM data models (define tables)
-│   │   ├── user.model.js             ←  Users: id, name, email, password, role
-│   │   ├── visitor.model.js          ←  Visitors: name, phone, photo, purpose, flat
-│   │   ├── approval.model.js         ←  Approvals: status, residentId, visitorId
-│   │   └── entrylog.model.js         ←  Logs: entryTime, exitTime, duration, guardId
+│   ├── 📁 models/                    ←  Database table definitions
+│   │   ├── user.model.js             ←  id, name, email, password, role
+│   │   ├── visitor.model.js          ←  name, phone, purpose, flat, entryTime
+│   │   ├── approval.model.js         ←  status, residentId, visitorId, timestamp
+│   │   └── entrylog.model.js         ←  entryTime, exitTime, duration, guardId
 │   │
-│   ├── 📁 routes/                    ←  Express route definitions (URL → controller)
-│   │   ├── auth.routes.js            ←  POST /login, POST /register, POST /logout
-│   │   ├── visitor.routes.js         ←  Full CRUD for visitor management
-│   │   ├── approval.routes.js        ←  Approve / decline / history endpoints
-│   │   └── admin.routes.js           ←  Admin-only user and log management routes
+│   ├── 📁 routes/                    ←  API route definitions
+│   │   ├── auth.routes.js            ←  POST /login  •  POST /register
+│   │   ├── visitor.routes.js         ←  CRUD for visitor registration
+│   │   ├── approval.routes.js        ←  Approve / Decline / pending list
+│   │   └── admin.routes.js           ←  Admin-only user & log management
 │   │
-│   ├── 📁 controllers/               ←  Business logic handlers (called by routes)
-│   │   ├── auth.controller.js        ←  Login, register, bcrypt compare, JWT sign
-│   │   ├── visitor.controller.js     ←  Register, list, search, exit-mark visitors
-│   │   ├── approval.controller.js    ←  Handle approve/decline, update approval status
-│   │   └── admin.controller.js       ←  User management, reports, dashboard data
+│   ├── 📁 controllers/               ←  Business logic per route
+│   │   ├── auth.controller.js        ←  Login, register, JWT signing
+│   │   ├── visitor.controller.js     ←  Create visitor, list, mark exit
+│   │   ├── approval.controller.js    ←  Handle approve / decline actions
+│   │   └── admin.controller.js       ←  User management, logs, dashboard
 │   │
 │   ├── 📁 middleware/
 │   │   ├── auth.middleware.js        ←  Verify JWT on every protected route
-│   │   └── role.middleware.js        ←  Block access if user role is insufficient
+│   │   └── role.middleware.js        ←  Block if user role doesn't match
 │   │
 │   └── 📁 services/
-│       ├── email.service.js          ←  Nodemailer SMTP config + HTML email templates
-│       └── token.service.js          ←  JWT sign, verify, and decode helpers
+│       └── token.service.js          ←  JWT sign, verify, decode helpers
 │
 └── 📁 frontend/                      ←  ════ CLIENT-SIDE APPLICATION ════
     │
-    ├── 📦 package.json               ←  Frontend-only React dependencies
-    │
+    ├── 📦 package.json               ←  React frontend dependencies
     └── 📁 src/
+        ├── 🟦 App.jsx                ←  Root component + all route definitions
         │
-        ├── 🟦 App.jsx                ←  Root component + React Router route definitions
+        ├── 📁 pages/
+        │   ├── Login.jsx             ←  Shared login for Guard, Resident, Admin
+        │   ├── GuardDashboard.jsx    ←  Register visitors, view live status list
+        │   ├── ResidentPortal.jsx    ←  View pending requests, approve or decline
+        │   └── AdminPanel.jsx        ←  Full control: users, visitors, logs
         │
-        ├── 📁 pages/                 ←  Full-page React components
-        │   ├── Login.jsx             ←  Login form for all user roles
-        │   ├── GuardDashboard.jsx    ←  Guard: register visitors, view list, mark exit
-        │   ├── ResidentPortal.jsx    ←  Resident: view requests, approve or decline
-        │   └── AdminPanel.jsx        ←  Admin: user management, full visitor logs
-        │
-        ├── 📁 components/            ←  Reusable UI building blocks
+        ├── 📁 components/
         │   ├── Navbar.jsx            ←  Navigation bar with role-based links
-        │   ├── VisitorCard.jsx       ←  Single visitor info card
-        │   ├── ApprovalBadge.jsx     ←  Status badge: pending / approved / declined
+        │   ├── VisitorCard.jsx       ←  Visitor info card with approve/decline
+        │   ├── ApprovalBadge.jsx     ←  Status badge: Pending / Approved / Declined
         │   └── Modal.jsx             ←  Confirmation popup dialogs
         │
         ├── 📁 services/
         │   └── api.js               ←  Axios instance + all API call functions
         │
-        └── 📁 styles/               ←  CSS stylesheets per page and component
+        └── 📁 styles/               ←  CSS per page and component
 ```
 
 ---
@@ -696,33 +689,31 @@ The system is divided into **six core functional modules**, each handling a dist
 ╔═════════════════════════════════════════════════════════════════════════════╗
 ║  🔐  AUTH ROUTES — /api/auth                                                ║
 ╠══════════════╦══════════════════════════════╦══════════════════════════════╣
-║  POST        ║  /api/auth/login             ║  Authenticate user, return JWT║
+║  POST        ║  /api/auth/login             ║  Login — returns JWT token    ║
 ║  POST        ║  /api/auth/register          ║  Create a new user account    ║
-║  POST        ║  /api/auth/logout            ║  Invalidate user session      ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
-║  👮  VISITOR ROUTES — /api/visitors          (Guard + Admin only)           ║
+║  👮  VISITOR ROUTES — /api/visitors          (Guard + Admin)                ║
 ╠══════════════╦══════════════════════════════╦══════════════════════════════╣
+║  POST        ║  /api/visitors               ║  Guard registers a visitor    ║
 ║  GET         ║  /api/visitors               ║  Get all visitors (today)     ║
-║  POST        ║  /api/visitors               ║  Register a new visitor       ║
 ║  GET         ║  /api/visitors/:id           ║  Get one visitor's details    ║
-║  PUT         ║  /api/visitors/:id/exit      ║  Log visitor exit timestamp   ║
-║  GET         ║  /api/visitors/search        ║  Search by name/flat/date     ║
+║  PUT         ║  /api/visitors/:id/exit      ║  Guard marks visitor as exited║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║  ✅  APPROVAL ROUTES — /api/approval         (Resident + Admin)             ║
 ╠══════════════╦══════════════════════════════╦══════════════════════════════╣
-║  GET         ║  /api/approval/pending       ║  Get my pending requests      ║
+║  GET         ║  /api/approval/pending       ║  Resident fetches their queue ║
 ║  PUT         ║  /api/approval/:id/approve   ║  Resident approves visitor    ║
 ║  PUT         ║  /api/approval/:id/decline   ║  Resident declines visitor    ║
-║  GET         ║  /api/approval/history       ║  All past decisions by me     ║
+║  GET         ║  /api/approval/history       ║  Resident's past decisions    ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║  🔑  ADMIN ROUTES — /api/admin               (Admin only)                  ║
 ╠══════════════╦══════════════════════════════╦══════════════════════════════╣
-║  GET         ║  /api/admin/users            ║  List all user accounts       ║
-║  POST        ║  /api/admin/users            ║  Create guard/resident user   ║
-║  PUT         ║  /api/admin/users/:id        ║  Update a user account        ║
-║  DELETE      ║  /api/admin/users/:id        ║  Deactivate a user account    ║
-║  GET         ║  /api/admin/residents        ║  Get all resident accounts    ║
-║  GET         ║  /api/admin/logs             ║  Full entry/exit log          ║
+║  GET         ║  /api/admin/users            ║  List all users               ║
+║  POST        ║  /api/admin/users            ║  Create guard or resident     ║
+║  PUT         ║  /api/admin/users/:id        ║  Update any user account      ║
+║  DELETE      ║  /api/admin/users/:id        ║  Deactivate a user            ║
+║  GET         ║  /api/admin/visitors         ║  All visitors across all flats║
+║  GET         ║  /api/admin/logs             ║  Full entry and exit log      ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -733,99 +724,71 @@ The system is divided into **six core functional modules**, each handling a dist
 ### 📋 Prerequisites
 
 ```
-✅  Node.js  —  v16 or higher      https://nodejs.org
-✅  npm      —  v8 or higher       (comes bundled with Node.js)
-✅  MySQL    —  v8.0+              https://mysql.com  (or PostgreSQL v14+)
-✅  Git      —  any version        https://git-scm.com
-✅  Gmail    —  any account        For Nodemailer email notifications
+✅  Node.js  v16+    →   https://nodejs.org
+✅  npm      v8+     →   comes with Node.js
+✅  MySQL    v8.0+   →   https://mysql.com   (or PostgreSQL v14+)
+✅  Git              →   https://git-scm.com
 ```
 
----
+### ⚡ Installation
 
-### ⚡ Step-by-Step Installation
-
-**Step 1 — Clone the Repository**
+**1 — Clone the repository**
 ```bash
 git clone https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System.git
 cd Smart-Visitor-Approval-Security-System
 ```
 
-**Step 2 — Install Root & Backend Dependencies**
+**2 — Install backend dependencies**
 ```bash
 npm install
 ```
 
-**Step 3 — Install Frontend Dependencies**
+**3 — Install frontend dependencies**
 ```bash
 cd frontend
 npm install
 cd ..
 ```
 
-**Step 4 — Create the Database**
+**4 — Create the database**
 ```sql
--- Open MySQL Workbench or terminal and run:
 CREATE DATABASE visitor_system;
 ```
 
-**Step 5 — Configure Environment Variables**
-
-Create a `.env` file inside the `backend/` folder:
-
+**5 — Create `backend/.env`**
 ```env
-# ── Server Configuration ──────────────────────────────────
 PORT=5000
 
-# ── Database Configuration ────────────────────────────────
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your_database_password
 DB_NAME=visitor_system
-DB_DIALECT=mysql          # or postgres
+DB_DIALECT=mysql
 
-# ── JWT Configuration ─────────────────────────────────────
-JWT_SECRET=your_super_long_random_secret_key_here
+JWT_SECRET=your_secret_key_here
 JWT_EXPIRES_IN=7d
-
-# ── Nodemailer Email Config (Gmail SMTP) ──────────────────
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_gmail@gmail.com
-EMAIL_PASS=your_gmail_app_password
-EMAIL_FROM="Smart Security System <your_gmail@gmail.com>"
 ```
 
-> ⚠️ **Gmail App Password Setup:**
-> Enable 2-Step Verification → Go to **Google Account → Security → App Passwords** → Generate a 16-character app password → Use that as `EMAIL_PASS`.
-> **Do not use your actual Gmail password.**
+### ▶️ Run the App
 
----
-
-### ▶️ Running the Application
-
-**Terminal 1 — Start the Backend Server**
+**Terminal 1 — Backend**
 ```bash
-# Production
-npm start
-
-# Development (live reload with nodemon)
-npm run dev
+npm start          # production
+npm run dev        # development (auto-restart)
 ```
-✅ API running at → `http://localhost:5000`
+API → `http://localhost:5000`
 
-**Terminal 2 — Start the Frontend**
+**Terminal 2 — Frontend**
 ```bash
 cd frontend
 npm start
 ```
-✅ App running at → `http://localhost:3000`
+App → `http://localhost:3000`
 
 ---
 
 ## 🌐 Live Demo
-
-The application is **live and publicly deployed** on Vercel.
 
 <div align="center">
 
@@ -836,39 +799,30 @@ The application is **live and publicly deployed** on Vercel.
 
 </div>
 
-You can visit the live link to explore the full system — Guard Dashboard, Resident Portal, and Admin Panel — all running in production.
-
 ---
 
 ## 💡 Use Cases
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                                                                             │
-│   🏘️  RESIDENTIAL SOCIETIES                                                 │
-│       Replace paper visitor registers in housing societies with a fully     │
-│       digital system. Residents approve visitors from their phone and       │
-│       the guard never needs to make a single phone call.                   │
-│                                                                             │
-│   🏢  CORPORATE OFFICE BUILDINGS                                            │
-│       Track contractors, vendors, and external guests visiting specific     │
-│       departments. Employees receive digital approval requests with full    │
-│       visitor details before granting access.                              │
-│                                                                             │
-│   🎓  EDUCATIONAL INSTITUTIONS                                              │
-│       Schools and colleges can track parents, delivery personnel, and      │
-│       guest lecturers entering campus. Faculty can approve or deny access  │
-│       digitally from their portal.                                         │
-│                                                                             │
-│   🏥  HOSPITALS & HEALTHCARE FACILITIES                                     │
-│       Manage patient visitors ward by ward. Each ward in-charge can        │
-│       approve or decline visitors digitally while the security desk        │
-│       maintains a clean digital log of all who entered.                    │
-│                                                                             │
-│   🏨  HOTELS & SERVICED APARTMENTS                                          │
-│       Track guests visiting specific rooms. Hotel staff can manage who     │
-│       is allowed access to private residential floors with a full log.     │
-│                                                                             │
+│  🏘️  RESIDENTIAL SOCIETIES   — Digitize gate visitor management across      │
+│                                all flats. Residents approve from any device │
+│                                without a single phone call from the guard.  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  🏢  CORPORATE BUILDINGS     — Track contractors and external visitors per  │
+│                                department. Employees manage access from     │
+│                                their own portal.                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  🎓  EDUCATIONAL INSTITUTES  — Manage parent visits and guest lecturers on  │
+│                                campus. Faculty can approve or decline from  │
+│                                their login.                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  🏥  HOSPITALS               — Control patient visitors ward by ward.       │
+│                                Ward staff approve visitors digitally with   │
+│                                a full log of every person who entered.      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  🏨  HOTELS & HOSTELS        — Track guests visiting specific rooms with a  │
+│                                permanent digital record for management.     │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -881,37 +835,29 @@ You can visit the live link to explore the full system — Guard Dashboard, Resi
 ║                        🚀  PLANNED ENHANCEMENTS                            ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║                                                                             ║
+║  📲  Push Notifications                                                     ║
+║      Notify residents of new pending visitor requests via browser push      ║
+║      notifications so they don't need to keep the portal open.             ║
+║                                                                             ║
 ║  📱  Mobile App — React Native                                              ║
-║      Native Android and iOS app so residents get push notifications        ║
-║      and can approve or decline visitors instantly without opening email.  ║
+║      Native Android and iOS app for guards and residents with a better     ║
+║      mobile experience and background notification support.                ║
 ║                                                                             ║
 ║  📷  QR Code Visitor Check-In                                               ║
-║      Pre-approved frequent visitors (maids, cooks) issued a QR code        ║
-║      that the guard scans to log entry without any manual form filling.    ║
+║      Pre-approved regular visitors (maids, drivers) get a QR code the      ║
+║      guard scans to log their entry without any manual form.               ║
 ║                                                                             ║
 ║  🤖  Face Recognition Entry                                                 ║
-║      Integrate facial recognition at the gate camera to auto-identify      ║
-║      registered visitors and flag unknown faces to the guard instantly.    ║
+║      Camera at the gate auto-identifies pre-registered visitors and        ║
+║      flags unknown faces to the guard dashboard.                           ║
 ║                                                                             ║
-║  📲  WhatsApp & SMS Alerts via Twilio                                       ║
-║      Add WhatsApp Business API or Twilio SMS as notification channels      ║
-║      alongside email for residents who prefer messaging over email.        ║
+║  📊  Analytics Dashboard                                                    ║
+║      Visual charts for peak visitor hours, approval rates, and building    ║
+║      security insights using Recharts or Chart.js.                         ║
 ║                                                                             ║
-║  ☁️  Full Cloud Infrastructure                                              ║
-║      Backend on AWS EC2 or Railway, database on AWS RDS, frontend on      ║
-║      Vercel (already live) for a fully managed production environment.     ║
-║                                                                             ║
-║  📊  Analytics & Reporting Dashboard                                        ║
-║      Visual charts showing visitor trends, peak entry hours, approval      ║
-║      rates, and building-level security insights using Recharts.           ║
-║                                                                             ║
-║  🏙️  Multi-Building / Multi-Society Support                                 ║
-║      Single admin account managing multiple building wings, towers,        ║
-║      or entirely separate societies under one unified dashboard.           ║
-║                                                                             ║
-║  🌐  Multi-Language UI                                                      ║
-║      Localize the interface in Gujarati, Hindi, Marathi, and other         ║
-║      regional languages for broader accessibility across India.            ║
+║  🏙️  Multi-Building Support                                                 ║
+║      One admin account managing multiple buildings, towers, or             ║
+║      societies under a single unified platform.                            ║
 ║                                                                             ║
 ╚═════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -920,37 +866,20 @@ You can visit the live link to explore the full system — Guard Dashboard, Resi
 
 ## 🤝 Contributing
 
-All contributions are warmly welcome — bug fixes, new features, UI improvements, docs, and tests!
-
 ```bash
-# 1. Fork this repository on GitHub
+# 1. Fork this repository
 
-# 2. Clone your fork locally
-git clone https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System.git
-cd Smart-Visitor-Approval-Security-System
-
-# 3. Create a new feature branch
+# 2. Create your branch
 git checkout -b feature/your-feature-name
 
-# 4. Make your changes, stage and commit
-git add .
-git commit -m "feat: describe what you added or fixed"
+# 3. Commit your changes
+git commit -m "feat: what you added or fixed"
 
-# 5. Push your branch to your fork on GitHub
+# 4. Push and open a Pull Request
 git push origin feature/your-feature-name
-
-# 6. Open a Pull Request on the original repository 🎉
 ```
 
-**Contribution Ideas:**
-- 📱 React Native mobile application (iOS & Android)
-- 📷 QR code or facial recognition check-in integration
-- 📊 Analytics dashboard with Recharts or Chart.js
-- 🔔 WhatsApp / SMS alerts via Twilio API
-- 🌐 Multilingual interface using i18next
-- 🧪 Unit and integration tests (Jest + Supertest)
-- 🐳 Docker & docker-compose configuration for easy setup
-- 🔄 CI/CD pipeline with GitHub Actions
+**Ideas:** Push notifications · QR code check-in · Face recognition · Analytics charts · Mobile app · Multi-building support · Docker setup · CI/CD with GitHub Actions
 
 ---
 
@@ -963,15 +892,11 @@ git push origin feature/your-feature-name
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-**⭐ If this project helped you, please give it a star!**
+**⭐ Star this repo if it helped you!**
 
-[![GitHub stars](https://img.shields.io/github/stars/happylimbasiya22/Smart-Visitor-Approval-Security-System?style=social&label=⭐%20Star)](https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System)
-&nbsp;&nbsp;
-[![GitHub forks](https://img.shields.io/github/forks/happylimbasiya22/Smart-Visitor-Approval-Security-System?style=social&label=🍴%20Fork)](https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System/fork)
-
-<br/>
-
-*Made with ❤️ for safer, smarter communities*
+[![GitHub stars](https://img.shields.io/github/stars/happylimbasiya22/Smart-Visitor-Approval-Security-System?style=social)](https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System)
+&nbsp;
+[![GitHub forks](https://img.shields.io/github/forks/happylimbasiya22/Smart-Visitor-Approval-Security-System?style=social)](https://github.com/happylimbasiya22/Smart-Visitor-Approval-Security-System/fork)
 
 *ISC License — free to use, modify, and distribute*
 
